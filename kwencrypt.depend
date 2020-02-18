@@ -1690,15 +1690,15 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1582015350 d:\proj\kwencrypt\kwencryptmain.h
+1582038887 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
+	<wx/dirdlg.h>
 	<wx/filedlg.h>
 	<wx/frame.h>
 	<wx/listbox.h>
 	<wx/menu.h>
 	<wx/panel.h>
 	<wx/sizer.h>
-	<wx/statline.h>
 	<wx/statusbr.h>
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\menu.h
@@ -1822,7 +1822,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582015976 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582037906 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -1932,7 +1932,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\os2\msgdlg.h
 
-1582014674 source:d:\proj\kwencrypt\dndialogfile.cpp
+1582030931 source:d:\proj\kwencrypt\dndialogfile.cpp
 	"DnDialogFile.h"
 	<wx/listbox.h>
 	<wx/filename.h>
@@ -2486,4 +2486,62 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\statline.h
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\generic\statline.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\dirdlg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/generic/dirdlgg.h"
+	"wx/generic/dirdlgg.h"
+	"wx/generic/dirdlgg.h"
+	"wx/msw/dirdlg.h"
+	"wx/gtk/dirdlg.h"
+	"wx/generic/dirdlgg.h"
+	"wx/osx/dirdlg.h"
+	"wx/cocoa/dirdlg.h"
+	"wx/generic/dirdlgg.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\generic\dirdlgg.h
+	"wx/dialog.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\dirdlg.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk\dirdlg.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\osx\dirdlg.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\dirdlg.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\stattext.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/stattext.h"
+	"wx/msw/stattext.h"
+	"wx/motif/stattext.h"
+	"wx/gtk/stattext.h"
+	"wx/gtk1/stattext.h"
+	"wx/osx/stattext.h"
+	"wx/cocoa/stattext.h"
+	"wx/os2/stattext.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\univ\stattext.h
+	"wx/generic/stattextg.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\generic\stattextg.h
+	"wx/stattext.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\stattext.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\motif\stattext.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk\stattext.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk1\stattext.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\osx\stattext.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\stattext.h
+	"wx/cocoa/NSTextField.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\os2\stattext.h
+	"wx/control.h"
 

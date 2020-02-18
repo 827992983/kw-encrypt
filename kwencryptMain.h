@@ -12,13 +12,13 @@
 
 //(*Headers(kwencryptFrame)
 #include <wx/button.h>
+#include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include <wx/frame.h>
 #include <wx/listbox.h>
 #include <wx/menu.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
-#include <wx/statline.h>
 #include <wx/statusbr.h>
 //*)
 
@@ -38,20 +38,25 @@ class kwencryptFrame: public wxFrame
         void OnClose(wxCloseEvent& event);
         void OnListBox1Select(wxCommandEvent& event);
         void OnbtnRemoveClick(wxCommandEvent& event);
-        void OnbtnAddClick(wxCommandEvent& event);
+        void OnbtnAddFileClick(wxCommandEvent& event);
         void OnbtnRemoveAllClick(wxCommandEvent& event);
         void OnbtnRemoveClick1(wxCommandEvent& event);
         void OnbtnEncryptClick(wxCommandEvent& event);
+        void OnbtnAddFolderClick(wxCommandEvent& event);
         //*)
 
         //(*Identifiers(kwencryptFrame)
         static const long ID_LISTBOX1;
-        static const long ID_PANEL2;
         static const long ID_BUTTON2;
+        static const long ID_BUTTON5;
         static const long ID_BUTTON3;
         static const long ID_BUTTON1;
-        static const long ID_STATICLINE1;
         static const long ID_BUTTON4;
+        static const long ID_LISTBOX2;
+        static const long ID_BUTTON6;
+        static const long ID_BUTTON7;
+        static const long ID_BUTTON9;
+        static const long ID_PANEL2;
         static const long ID_PANEL1;
         static const long idMenuQuit;
         static const long idMenuAbout;
@@ -59,15 +64,20 @@ class kwencryptFrame: public wxFrame
         //*)
 
         //(*Declarations(kwencryptFrame)
-        wxButton* btnAdd;
+        wxButton* Button1;
+        wxButton* Button2;
+        wxButton* Button4;
+        wxButton* btnAddFile;
+        wxButton* btnAddFolder;
         wxButton* btnEncrypt;
         wxButton* btnRemove;
         wxButton* btnRemoveAll;
+        wxDirDialog* DirDialog1;
         wxFileDialog* FileDialog1;
         wxListBox* ListBox1;
+        wxListBox* ListBox2;
         wxPanel* Panel1;
         wxPanel* Panel2;
-        wxStaticLine* StaticLine1;
         wxStatusBar* StatusBar1;
         //*)
 

@@ -8,26 +8,16 @@ bool DnDialogFile::OnDropFiles(wxCoord, wxCoord, const wxArrayString& filepaths)
 {
     wxListBox *box = frame->ListBox1;
     wxMessageOutputStderr out = wxMessageOutputStderr(stdout);
-    wxArrayString unExistsFiles;
+    //wxArrayString unExistsFiles;
     for (size_t i = 0; i < filepaths.GetCount(); i++) {
         wxFileName file_to_check = filepaths[i];
-        file_to_check.Normalize(wxPATH_NORM_ALL); // 解析快捷方式，获取完整路径 https://forums.wxwidgets.org/viewtopic.php?t=13529
-        if (wxFileName::FileExists(file_to_check.GetFullPath())) {
-            box->Append(file_to_check.GetFullPath());
-            out.Printf("%s\n", file_to_check.GetFullPath());
+        box->Append(file_to_check.GetFullPath());
+        if (!file_to_check.FileExists()) {
+            out.Printf("[Log] Folder: %s\n", file_to_check.GetFullPath());
         } else {
-            unExistsFiles.Add(file_to_check.GetFullPath());
+            out.Printf("[Log] File: %s\n", file_to_check.GetFullPath());
         }
-    }
 
-    // 检查是否存在无效的快捷方式，并输出添加结果
-    if (!unExistsFiles.IsEmpty()) {
-        frame->StatusBar1->SetLabel(wxString("") << filepaths.GetCount() - unExistsFiles.GetCount()
-                                    << " file(s) successfully added, "
-                                    << unExistsFiles.GetCount() << " invalid has been excluded!");
-    } else {
-        frame->StatusBar1->SetLabel(wxString("") << filepaths.GetCount() - unExistsFiles.GetCount()
-                                    << " file(s) successfully added!");
     }
 
     // 消除重复项
