@@ -6,7 +6,7 @@ The user interface looks like this. At present, only the basic interface has bee
 
 
 
-<img src="http://fs.fe80.in:25000/img/kwe.png" style="zoom:75%;" />
+<img src="kwe.png" style="zoom:75%;" />
 
 
 
