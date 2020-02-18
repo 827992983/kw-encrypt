@@ -6,7 +6,7 @@ The user interface looks like this. At present, only the basic interface has bee
 
 
 
-<img src="kwe.png" style="zoom:75%;" />
+![](https://github.com/Kwansy98/kw-encrypt/blob/master/kwe.PNG)
 
 
 
