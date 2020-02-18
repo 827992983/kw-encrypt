@@ -1690,12 +1690,15 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1581854406 d:\proj\kwencrypt\kwencryptmain.h
+1582015350 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
 	<wx/filedlg.h>
 	<wx/frame.h>
 	<wx/listbox.h>
 	<wx/menu.h>
+	<wx/panel.h>
+	<wx/sizer.h>
+	<wx/statline.h>
 	<wx/statusbr.h>
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\menu.h
@@ -1819,7 +1822,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1581857359 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582015976 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -1929,7 +1932,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\os2\msgdlg.h
 
-1581858958 source:d:\proj\kwencrypt\dndialogfile.cpp
+1582014674 source:d:\proj\kwencrypt\dndialogfile.cpp
 	"DnDialogFile.h"
 	<wx/listbox.h>
 	<wx/filename.h>
@@ -2449,4 +2452,38 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\filedlg.h
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\os2\filedlg.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\sizer.h
+	"wx/defs.h"
+	"wx/window.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\statline.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/statline.h"
+	"wx/msw/statline.h"
+	"wx/gtk/statline.h"
+	"wx/gtk1/statline.h"
+	"wx/os2/statline.h"
+	"wx/osx/statline.h"
+	"wx/cocoa/statline.h"
+	"wx/generic/statline.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\univ\statline.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\statline.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk\statline.h
+	"wx/defs.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk1\statline.h
+	"wx/defs.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\os2\statline.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\osx\statline.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\statline.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\generic\statline.h
 

@@ -31,8 +31,10 @@ bool DnDialogFile::OnDropFiles(wxCoord, wxCoord, const wxArrayString& filepaths)
     }
 
     // Ïû³ýÖØ¸´Ïî
-    for (size_t i = box->GetCount() - 1; i >= 1; i--) {
-        if (box->GetString(i) == box->GetString(i - 1)) box->Delete(i);
+    if (!box->IsEmpty()) {
+        for (size_t i = box->GetCount() - 1; i >= 1; i--) {
+            if (box->GetString(i) == box->GetString(i - 1)) box->Delete(i);
+        }
     }
 
 

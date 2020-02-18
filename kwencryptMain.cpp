@@ -44,9 +44,13 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 
 //(*IdInit(kwencryptFrame)
 const long kwencryptFrame::ID_LISTBOX1 = wxNewId();
-const long kwencryptFrame::ID_BUTTON1 = wxNewId();
+const long kwencryptFrame::ID_PANEL2 = wxNewId();
 const long kwencryptFrame::ID_BUTTON2 = wxNewId();
 const long kwencryptFrame::ID_BUTTON3 = wxNewId();
+const long kwencryptFrame::ID_BUTTON1 = wxNewId();
+const long kwencryptFrame::ID_STATICLINE1 = wxNewId();
+const long kwencryptFrame::ID_BUTTON4 = wxNewId();
+const long kwencryptFrame::ID_PANEL1 = wxNewId();
 const long kwencryptFrame::idMenuQuit = wxNewId();
 const long kwencryptFrame::idMenuAbout = wxNewId();
 const long kwencryptFrame::ID_STATUSBAR1 = wxNewId();
@@ -60,6 +64,9 @@ END_EVENT_TABLE()
 kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
 {
     //(*Initialize(kwencryptFrame)
+    wxBoxSizer* BoxSizer1;
+    wxBoxSizer* BoxSizer2;
+    wxBoxSizer* BoxSizer3;
     wxMenu* Menu1;
     wxMenu* Menu2;
     wxMenuBar* MenuBar1;
@@ -67,11 +74,34 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     wxMenuItem* MenuItem2;
 
     Create(parent, wxID_ANY, _("kw-encryptor"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxCLIP_CHILDREN, _T("wxID_ANY"));
-    SetClientSize(wxSize(720,500));
-    ListBox1 = new wxListBox(this, ID_LISTBOX1, wxPoint(8,8), wxSize(580,400), 0, 0, wxLB_EXTENDED|wxLB_HSCROLL|wxLB_NEEDED_SB|wxLB_SORT, wxDefaultValidator, _T("ID_LISTBOX1"));
-    btnRemoveAll = new wxButton(this, ID_BUTTON1, _("Remove all"), wxPoint(600,88), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    btnAdd = new wxButton(this, ID_BUTTON2, _("Add"), wxPoint(600,8), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
-    btnRemove = new wxButton(this, ID_BUTTON3, _("Remove"), wxPoint(600,48), wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    SetClientSize(wxSize(932,491));
+    Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
+    BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
+    Panel2 = new wxPanel(Panel1, ID_PANEL2, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL2"));
+    BoxSizer2 = new wxBoxSizer(wxHORIZONTAL);
+    ListBox1 = new wxListBox(Panel2, ID_LISTBOX1, wxDefaultPosition, wxDefaultSize, 0, 0, wxLB_EXTENDED|wxLB_NEEDED_SB|wxLB_SORT, wxDefaultValidator, _T("ID_LISTBOX1"));
+    ListBox1->SetToolTip(_("Drag and drop files here to add files"));
+    BoxSizer2->Add(ListBox1, 1, wxEXPAND, 0);
+    Panel2->SetSizer(BoxSizer2);
+    BoxSizer2->Fit(Panel2);
+    BoxSizer2->SetSizeHints(Panel2);
+    BoxSizer1->Add(Panel2, 5, wxALL|wxEXPAND, 5);
+    BoxSizer3 = new wxBoxSizer(wxVERTICAL);
+    btnAdd = new wxButton(Panel1, ID_BUTTON2, _("Add"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
+    BoxSizer3->Add(btnAdd, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
+    btnRemove = new wxButton(Panel1, ID_BUTTON3, _("Remove"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
+    BoxSizer3->Add(btnRemove, 0, wxALL|wxEXPAND, 1);
+    btnRemoveAll = new wxButton(Panel1, ID_BUTTON1, _("Remove all"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    BoxSizer3->Add(btnRemoveAll, 0, wxALL|wxEXPAND, 1);
+    StaticLine1 = new wxStaticLine(Panel1, ID_STATICLINE1, wxDefaultPosition, wxSize(10,-1), wxLI_HORIZONTAL, _T("ID_STATICLINE1"));
+    BoxSizer3->Add(StaticLine1, 0, wxALL|wxEXPAND, 3);
+    btnEncrypt = new wxButton(Panel1, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
+    btnEncrypt->Disable();
+    BoxSizer3->Add(btnEncrypt, 0, wxALL|wxEXPAND, 1);
+    BoxSizer1->Add(BoxSizer3, 1, wxTOP|wxBOTTOM|wxRIGHT|wxEXPAND, 5);
+    Panel1->SetSizer(BoxSizer1);
+    BoxSizer1->Fit(Panel1);
+    BoxSizer1->SetSizeHints(Panel1);
     MenuBar1 = new wxMenuBar();
     Menu1 = new wxMenu();
     MenuItem1 = new wxMenuItem(Menu1, idMenuQuit, _("Quit\tAlt-F4"), _("Quit the application"), wxITEM_NORMAL);
@@ -91,24 +121,25 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN|wxFD_FILE_MUST_EXIST|wxFD_MULTIPLE|wxFD_CHANGE_DIR, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
 
     Connect(ID_LISTBOX1,wxEVT_COMMAND_LISTBOX_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnListBox1Select);
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveAllClick);
     Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnAddClick);
     Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveClick);
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveAllClick);
+    Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnEncryptClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnAbout);
     //*)
 
 
-    SetDropTarget(new DnDialogFile(this));
-    printf("frame initial success!\n");
-
+    SetDropTarget(new DnDialogFile(this)); // 拖放对话框
+    printf("[Log] Window initialization successful!\n");
 }
 
 kwencryptFrame::~kwencryptFrame()
 {
     //(*Destroy(kwencryptFrame)
     //*)
-    printf("frame closed!\n");
+    printf("[Log] Window closed!\n");
+
     //system("pause");
 }
 
@@ -175,8 +206,10 @@ void kwencryptFrame::OnbtnAddClick(wxCommandEvent& event)
     }
 
     // 消除重复项
-    for (size_t i = ListBox1->GetCount() - 1; i >= 1; i--) {
-        if (ListBox1->GetString(i) == ListBox1->GetString(i - 1)) ListBox1->Delete(i);
+    if (!ListBox1->IsEmpty()) {
+        for (size_t i = ListBox1->GetCount() - 1; i >= 1; i--) {
+            if (ListBox1->GetString(i) == ListBox1->GetString(i - 1)) ListBox1->Delete(i);
+        }
     }
 }
 
@@ -184,4 +217,9 @@ void kwencryptFrame::OnbtnAddClick(wxCommandEvent& event)
 void kwencryptFrame::OnbtnRemoveAllClick(wxCommandEvent& event)
 {
     ListBox1->Clear();
+}
+
+// 加密文件
+void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
+{
 }

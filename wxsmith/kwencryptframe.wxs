@@ -2,30 +2,79 @@
 <wxsmith>
 	<object class="wxFrame" name="kwencryptFrame">
 		<title>kw-encryptor</title>
-		<size>720,500</size>
+		<size>932,491</size>
 		<id_arg>0</id_arg>
 		<style>wxCAPTION|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxCLIP_CHILDREN</style>
-		<object class="wxListBox" name="ID_LISTBOX1" variable="ListBox1" member="yes">
-			<default>-1</default>
-			<pos>8,8</pos>
-			<size>580,400</size>
-			<style>wxLB_EXTENDED|wxLB_HSCROLL|wxLB_NEEDED_SB|wxLB_SORT</style>
-			<handler function="OnListBox1Select" entry="EVT_LISTBOX" />
-		</object>
-		<object class="wxButton" name="ID_BUTTON1" variable="btnRemoveAll" member="yes">
-			<label>Remove all</label>
-			<pos>600,88</pos>
-			<handler function="OnbtnRemoveAllClick" entry="EVT_BUTTON" />
-		</object>
-		<object class="wxButton" name="ID_BUTTON2" variable="btnAdd" member="yes">
-			<label>Add</label>
-			<pos>600,8</pos>
-			<handler function="OnbtnAddClick" entry="EVT_BUTTON" />
-		</object>
-		<object class="wxButton" name="ID_BUTTON3" variable="btnRemove" member="yes">
-			<label>Remove</label>
-			<pos>600,48</pos>
-			<handler function="OnbtnRemoveClick" entry="EVT_BUTTON" />
+		<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
+			<object class="wxBoxSizer" variable="BoxSizer1" member="no">
+				<object class="sizeritem">
+					<object class="wxPanel" name="ID_PANEL2" variable="Panel2" member="yes">
+						<object class="wxBoxSizer" variable="BoxSizer2" member="no">
+							<object class="sizeritem">
+								<object class="wxListBox" name="ID_LISTBOX1" variable="ListBox1" member="yes">
+									<default>-1</default>
+									<tooltip>Drag and drop files here to add files</tooltip>
+									<style>wxLB_EXTENDED|wxLB_NEEDED_SB|wxLB_SORT</style>
+									<handler function="OnListBox1Select" entry="EVT_LISTBOX" />
+								</object>
+								<flag>wxEXPAND</flag>
+								<option>1</option>
+							</object>
+						</object>
+					</object>
+					<flag>wxALL|wxEXPAND</flag>
+					<border>5</border>
+					<option>5</option>
+				</object>
+				<object class="sizeritem">
+					<object class="wxBoxSizer" variable="BoxSizer3" member="no">
+						<orient>wxVERTICAL</orient>
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_BUTTON2" variable="btnAdd" member="yes">
+								<label>Add</label>
+								<handler function="OnbtnAddClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
+							<border>1</border>
+						</object>
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_BUTTON3" variable="btnRemove" member="yes">
+								<label>Remove</label>
+								<handler function="OnbtnRemoveClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxEXPAND</flag>
+							<border>1</border>
+						</object>
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_BUTTON1" variable="btnRemoveAll" member="yes">
+								<label>Remove all</label>
+								<handler function="OnbtnRemoveAllClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxEXPAND</flag>
+							<border>1</border>
+						</object>
+						<object class="sizeritem">
+							<object class="wxStaticLine" name="ID_STATICLINE1" variable="StaticLine1" member="yes">
+								<size>10,-1</size>
+							</object>
+							<flag>wxALL|wxEXPAND</flag>
+							<border>3</border>
+						</object>
+						<object class="sizeritem">
+							<object class="wxButton" name="ID_BUTTON4" variable="btnEncrypt" member="yes">
+								<label>Encrypt</label>
+								<enabled>0</enabled>
+								<handler function="OnbtnEncryptClick" entry="EVT_BUTTON" />
+							</object>
+							<flag>wxALL|wxEXPAND</flag>
+							<border>1</border>
+						</object>
+					</object>
+					<flag>wxTOP|wxBOTTOM|wxRIGHT|wxEXPAND</flag>
+					<border>5</border>
+					<option>1</option>
+				</object>
+			</object>
 		</object>
 		<object class="wxMenuBar" variable="MenuBar1" member="no">
 			<object class="wxMenu" variable="Menu1" member="no">
