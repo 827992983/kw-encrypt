@@ -1,3 +1,7 @@
+#ifndef DNDIALOGFILE_H
+#define DNDIALOGFILE_H
+
+
 #include <wx/dnd.h>
 #include <wx/dialog.h>
 #include "kwencryptMain.h"
@@ -12,3 +16,6 @@ public:
 private:
     kwencryptFrame *frame;
 };
+
+
+#endif

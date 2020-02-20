@@ -10,17 +10,19 @@
 #ifndef KWENCRYPTMAIN_H
 #define KWENCRYPTMAIN_H
 
+
 //(*Headers(kwencryptFrame)
 #include <wx/button.h>
 #include <wx/dirdlg.h>
 #include <wx/filedlg.h>
 #include <wx/frame.h>
-#include <wx/listbox.h>
+#include <wx/listctrl.h>
 #include <wx/menu.h>
 #include <wx/panel.h>
 #include <wx/sizer.h>
 #include <wx/statusbr.h>
 //*)
+#include "FileItemMenu.h"
 
 class kwencryptFrame: public wxFrame
 {
@@ -39,20 +41,27 @@ class kwencryptFrame: public wxFrame
         void OnListBox1Select(wxCommandEvent& event);
         void OnbtnRemoveClick(wxCommandEvent& event);
         void OnbtnAddFileClick(wxCommandEvent& event);
-        void OnbtnRemoveAllClick(wxCommandEvent& event);
+        void OnbtnRemoveAllOriginFilesClick(wxCommandEvent& event);
         void OnbtnRemoveClick1(wxCommandEvent& event);
         void OnbtnEncryptClick(wxCommandEvent& event);
         void OnbtnAddFolderClick(wxCommandEvent& event);
+        void OnButton3Click(wxCommandEvent& event);
+        void OnlistOriginFilesItemRClick(wxListEvent& event);
+        void OnlistOriginFilesItemSelect(wxListEvent& event);
+        void OnlistOriginFilesItemDeselect(wxListEvent& event);
         //*)
+        void OnMenuItemCopyOriginalFileSelected(wxCommandEvent& event);
+        void OnMenuItemRemoveOriginalFileSelected(wxCommandEvent& event);
+        void OnMenuItemOpenOriginalFileInExplorerSelected(wxCommandEvent& event);
 
         //(*Identifiers(kwencryptFrame)
-        static const long ID_LISTBOX1;
+        static const long ID_LISTCTRL1;
         static const long ID_BUTTON2;
         static const long ID_BUTTON5;
         static const long ID_BUTTON3;
         static const long ID_BUTTON1;
         static const long ID_BUTTON4;
-        static const long ID_LISTBOX2;
+        static const long ID_LISTCTRL2;
         static const long ID_BUTTON6;
         static const long ID_BUTTON7;
         static const long ID_BUTTON9;
@@ -62,6 +71,10 @@ class kwencryptFrame: public wxFrame
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         //*)
+        static const long ID_MENU_ORIGINAL_FILE_COPY;
+        static const long ID_MENU_ORIGINAL_FILE_REMOVE;
+        static const long ID_MENU_ORIGINAL_FILE_OPEN_IN_FILE_EXPLORER;
+
 
         //(*Declarations(kwencryptFrame)
         wxButton* Button1;
@@ -71,17 +84,18 @@ class kwencryptFrame: public wxFrame
         wxButton* btnAddFolder;
         wxButton* btnEncrypt;
         wxButton* btnRemove;
-        wxButton* btnRemoveAll;
+        wxButton* btnRemoveAllOriginFiles;
         wxDirDialog* DirDialog1;
         wxFileDialog* FileDialog1;
-        wxListBox* ListBox1;
-        wxListBox* ListBox2;
+        wxListCtrl* listKweFile;
+        wxListCtrl* listOriginFiles;
         wxPanel* Panel1;
         wxPanel* Panel2;
         wxStatusBar* StatusBar1;
         //*)
-
+        FileItemMenu *fileItemMenu;
         DECLARE_EVENT_TABLE()
 };
+
 
 #endif // KWENCRYPTMAIN_H

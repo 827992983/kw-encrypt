@@ -10,4 +10,4 @@ The user interface looks like this. At present, only the basic interface has bee
 
 
 
-This program should be able to run on a system between Windows XP and windows 10 without any other dependent files. Earlier systems were not tested. You can find the executable in the bin/release directory.
+This program should be able to run on a 64-bits system between Windows XP and windows 10 without any other dependent files. Earlier systems were not tested. You can find the executable in the bin/release directory.

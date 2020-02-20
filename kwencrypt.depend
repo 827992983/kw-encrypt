@@ -1690,16 +1690,17 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1582038887 d:\proj\kwencrypt\kwencryptmain.h
+1582214686 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
 	<wx/dirdlg.h>
 	<wx/filedlg.h>
 	<wx/frame.h>
-	<wx/listbox.h>
+	<wx/listctrl.h>
 	<wx/menu.h>
 	<wx/panel.h>
 	<wx/sizer.h>
 	<wx/statusbr.h>
+	"FileItemMenu.h"
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\menu.h
 	"wx/defs.h"
@@ -1822,11 +1823,14 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582037906 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582215410 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
 	<wx/filename.h>
+	"listData.h"
+	"FileItemMenu.h"
+	<wx/clipbrd.h>
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -1932,13 +1936,16 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\os2\msgdlg.h
 
-1582030931 source:d:\proj\kwencrypt\dndialogfile.cpp
+1582189463 source:d:\proj\kwencrypt\dndialogfile.cpp
 	"DnDialogFile.h"
 	<wx/listbox.h>
 	<wx/filename.h>
 	<wx/msgdlg.h>
+	<algorithm>
+	<list>
+	"listData.h"
 
-1581847142 d:\proj\kwencrypt\dndialogfile.h
+1582188918 d:\proj\kwencrypt\dndialogfile.h
 	<wx/dnd.h>
 	<wx/dialog.h>
 	"kwencryptMain.h"
@@ -2544,4 +2551,79 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\os2\stattext.h
 	"wx/control.h"
+
+1582187391 d:\proj\kwencrypt\listdata.hpp
+	<list>
+	<wx/string.h>
+	<wx/filename.h>
+
+1582206298 d:\proj\kwencrypt\listdata.h
+	<vector>
+	<wx/string.h>
+	<wx/filename.h>
+	<wx/listctrl.h>
+	<algorithm>
+
+1582211158 source:d:\proj\kwencrypt\listdata.cpp
+	"listData.h"
+
+1582201512 source:d:\proj\kwencrypt\fileitemmenu.cpp
+	"FileItemMenu.h"
+
+1582202180 d:\proj\kwencrypt\fileitemmenu.h
+	<wx/menu.h>
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\clipbrd.h
+	"wx/defs.h"
+	"wx/event.h"
+	"wx/chartype.h"
+	"wx/dataobj.h"
+	"wx/vector.h"
+	"wx/msw/clipbrd.h"
+	"wx/motif/clipbrd.h"
+	"wx/gtk/clipbrd.h"
+	"wx/gtk1/clipbrd.h"
+	"wx/x11/clipbrd.h"
+	"wx/osx/clipbrd.h"
+	"wx/cocoa/clipbrd.h"
+	"wx/os2/clipbrd.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\clipbrd.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\motif\clipbrd.h
+	"wx/list.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk\clipbrd.h
+	"wx/weakref.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk1\clipbrd.h
+	"wx/object.h"
+	"wx/list.h"
+	"wx/dataobj.h"
+	"wx/control.h"
+	"wx/module.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\module.h
+	"wx/object.h"
+	"wx/list.h"
+	"wx/arrstr.h"
+	"wx/dynarray.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\x11\clipbrd.h
+	"wx/object.h"
+	"wx/list.h"
+	"wx/dataobj.h"
+	"wx/control.h"
+	"wx/module.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\osx\clipbrd.h
+	"wx/osx/core/cfref.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\clipbrd.h
+	"wx/dataobj.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\os2\clipbrd.h
+	"wx/list.h"
+	"wx/module.h"
+	"wx/dataobj.h"
 

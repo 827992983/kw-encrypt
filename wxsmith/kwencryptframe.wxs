@@ -2,7 +2,7 @@
 <wxsmith>
 	<object class="wxFrame" name="kwencryptFrame">
 		<title>kw-encryptor</title>
-		<size>800,492</size>
+		<size>800,500</size>
 		<id_arg>0</id_arg>
 		<style>wxCAPTION|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxCLIP_CHILDREN</style>
 		<object class="wxPanel" name="ID_PANEL1" variable="Panel1" member="yes">
@@ -15,10 +15,11 @@
 								<object class="wxStaticBoxSizer" variable="StaticBoxSizer1" member="no">
 									<label>Drag the files you want to encrypt to the box below</label>
 									<object class="sizeritem">
-										<object class="wxListBox" name="ID_LISTBOX1" variable="ListBox1" member="yes">
-											<default>-1</default>
-											<style>wxLB_EXTENDED|wxLB_NEEDED_SB|wxLB_SORT</style>
-											<handler function="OnListBox1Select" entry="EVT_LISTBOX" />
+										<object class="wxListCtrl" name="ID_LISTCTRL1" variable="listOriginFiles" member="yes">
+											<style>wxLC_REPORT</style>
+											<handler function="OnlistOriginFilesItemSelect" entry="EVT_LIST_ITEM_SELECTED" />
+											<handler function="OnlistOriginFilesItemDeselect" entry="EVT_LIST_ITEM_DESELECTED" />
+											<handler function="OnlistOriginFilesItemRClick" entry="EVT_LIST_ITEM_RIGHT_CLICK" />
 										</object>
 										<flag>wxALL|wxEXPAND</flag>
 										<border>1</border>
@@ -52,9 +53,9 @@
 												<border>1</border>
 											</object>
 											<object class="sizeritem">
-												<object class="wxButton" name="ID_BUTTON1" variable="btnRemoveAll" member="yes">
+												<object class="wxButton" name="ID_BUTTON1" variable="btnRemoveAllOriginFiles" member="yes">
 													<label>Remove All</label>
-													<handler function="OnbtnRemoveAllClick" entry="EVT_BUTTON" />
+													<handler function="OnbtnRemoveAllOriginFilesClick" entry="EVT_BUTTON" />
 												</object>
 												<flag>wxALL|wxEXPAND</flag>
 												<border>1</border>
@@ -84,10 +85,10 @@
 							</object>
 							<object class="sizeritem">
 								<object class="wxStaticBoxSizer" variable="StaticBoxSizer2" member="no">
-									<label>Drag a file you want to decrypt to the box below</label>
+									<label>Drag a .KWE file you want to decrypt to the box below</label>
 									<object class="sizeritem">
-										<object class="wxListBox" name="ID_LISTBOX2" variable="ListBox2" member="yes">
-											<default>-1</default>
+										<object class="wxListCtrl" name="ID_LISTCTRL2" variable="listKweFile" member="yes">
+											<style>wxLC_REPORT</style>
 										</object>
 										<flag>wxALL|wxEXPAND</flag>
 										<border>1</border>
@@ -98,7 +99,8 @@
 											<orient>wxVERTICAL</orient>
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON6" variable="Button1" member="yes">
-													<label>Choose .kwe File</label>
+													<label>Choose .KWE File</label>
+													<enabled>0</enabled>
 												</object>
 												<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
 												<border>1</border>
@@ -106,6 +108,7 @@
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON7" variable="Button2" member="yes">
 													<label>Remove</label>
+													<enabled>0</enabled>
 												</object>
 												<flag>wxALL|wxEXPAND</flag>
 												<border>1</border>
@@ -118,6 +121,7 @@
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON9" variable="Button4" member="yes">
 													<label>Decrypt</label>
+													<enabled>0</enabled>
 												</object>
 												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
 												<border>1</border>
@@ -129,7 +133,6 @@
 								</object>
 								<flag>wxALL|wxEXPAND</flag>
 								<border>5</border>
-								<option>1</option>
 							</object>
 						</object>
 					</object>

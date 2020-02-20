@@ -11,6 +11,9 @@
 #include <wx/msgdlg.h>
 #include "DnDialogFile.h"
 #include <wx/filename.h>
+#include "listData.h"
+#include "FileItemMenu.h"
+#include <wx/clipbrd.h>
 //(*InternalHeaders(kwencryptFrame)
 #include <wx/intl.h>
 #include <wx/string.h>
@@ -43,13 +46,13 @@ wxString wxbuildinfo(wxbuildinfoformat format)
 }
 
 //(*IdInit(kwencryptFrame)
-const long kwencryptFrame::ID_LISTBOX1 = wxNewId();
+const long kwencryptFrame::ID_LISTCTRL1 = wxNewId();
 const long kwencryptFrame::ID_BUTTON2 = wxNewId();
 const long kwencryptFrame::ID_BUTTON5 = wxNewId();
 const long kwencryptFrame::ID_BUTTON3 = wxNewId();
 const long kwencryptFrame::ID_BUTTON1 = wxNewId();
 const long kwencryptFrame::ID_BUTTON4 = wxNewId();
-const long kwencryptFrame::ID_LISTBOX2 = wxNewId();
+const long kwencryptFrame::ID_LISTCTRL2 = wxNewId();
 const long kwencryptFrame::ID_BUTTON6 = wxNewId();
 const long kwencryptFrame::ID_BUTTON7 = wxNewId();
 const long kwencryptFrame::ID_BUTTON9 = wxNewId();
@@ -59,6 +62,11 @@ const long kwencryptFrame::idMenuQuit = wxNewId();
 const long kwencryptFrame::idMenuAbout = wxNewId();
 const long kwencryptFrame::ID_STATUSBAR1 = wxNewId();
 //*)
+
+const long kwencryptFrame::ID_MENU_ORIGINAL_FILE_COPY = wxNewId();
+const long kwencryptFrame::ID_MENU_ORIGINAL_FILE_REMOVE = wxNewId();
+const long kwencryptFrame::ID_MENU_ORIGINAL_FILE_OPEN_IN_FILE_EXPLORER = wxNewId();
+
 
 BEGIN_EVENT_TABLE(kwencryptFrame,wxFrame)
     //(*EventTable(kwencryptFrame)
@@ -81,14 +89,14 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     wxStaticBoxSizer* StaticBoxSizer2;
 
     Create(parent, wxID_ANY, _("kw-encryptor"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxCLIP_CHILDREN, _T("wxID_ANY"));
-    SetClientSize(wxSize(800,492));
+    SetClientSize(wxSize(800,500));
     Panel1 = new wxPanel(this, ID_PANEL1, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL1"));
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     Panel2 = new wxPanel(Panel1, ID_PANEL2, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL2"));
     BoxSizer2 = new wxBoxSizer(wxVERTICAL);
     StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, Panel2, _("Drag the files you want to encrypt to the box below"));
-    ListBox1 = new wxListBox(Panel2, ID_LISTBOX1, wxDefaultPosition, wxDefaultSize, 0, 0, wxLB_EXTENDED|wxLB_NEEDED_SB|wxLB_SORT, wxDefaultValidator, _T("ID_LISTBOX1"));
-    StaticBoxSizer1->Add(ListBox1, 5, wxALL|wxEXPAND, 1);
+    listOriginFiles = new wxListCtrl(Panel2, ID_LISTCTRL1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTCTRL1"));
+    StaticBoxSizer1->Add(listOriginFiles, 5, wxALL|wxEXPAND, 1);
     BoxSizer4 = new wxBoxSizer(wxVERTICAL);
     btnAddFile = new wxButton(Panel2, ID_BUTTON2, _("Choose File"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON2"));
     BoxSizer4->Add(btnAddFile, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
@@ -96,27 +104,30 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     BoxSizer4->Add(btnAddFolder, 0, wxALL|wxEXPAND, 1);
     btnRemove = new wxButton(Panel2, ID_BUTTON3, _("Remove"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON3"));
     BoxSizer4->Add(btnRemove, 0, wxALL|wxEXPAND, 1);
-    btnRemoveAll = new wxButton(Panel2, ID_BUTTON1, _("Remove All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
-    BoxSizer4->Add(btnRemoveAll, 0, wxALL|wxEXPAND, 1);
+    btnRemoveAllOriginFiles = new wxButton(Panel2, ID_BUTTON1, _("Remove All"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON1"));
+    BoxSizer4->Add(btnRemoveAllOriginFiles, 0, wxALL|wxEXPAND, 1);
     BoxSizer4->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     btnEncrypt = new wxButton(Panel2, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
     btnEncrypt->Disable();
     BoxSizer4->Add(btnEncrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
     StaticBoxSizer1->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
     BoxSizer2->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND, 5);
-    StaticBoxSizer2 = new wxStaticBoxSizer(wxHORIZONTAL, Panel2, _("Drag a file you want to decrypt to the box below"));
-    ListBox2 = new wxListBox(Panel2, ID_LISTBOX2, wxDefaultPosition, wxDefaultSize, 0, 0, 0, wxDefaultValidator, _T("ID_LISTBOX2"));
-    StaticBoxSizer2->Add(ListBox2, 5, wxALL|wxEXPAND, 1);
+    StaticBoxSizer2 = new wxStaticBoxSizer(wxHORIZONTAL, Panel2, _("Drag a .KWE file you want to decrypt to the box below"));
+    listKweFile = new wxListCtrl(Panel2, ID_LISTCTRL2, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTCTRL2"));
+    StaticBoxSizer2->Add(listKweFile, 5, wxALL|wxEXPAND, 1);
     BoxSizer3 = new wxBoxSizer(wxVERTICAL);
-    Button1 = new wxButton(Panel2, ID_BUTTON6, _("Choose .kwe File"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    Button1 = new wxButton(Panel2, ID_BUTTON6, _("Choose .KWE File"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    Button1->Disable();
     BoxSizer3->Add(Button1, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
     Button2 = new wxButton(Panel2, ID_BUTTON7, _("Remove"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON7"));
+    Button2->Disable();
     BoxSizer3->Add(Button2, 0, wxALL|wxEXPAND, 1);
-    BoxSizer3->Add(0,0,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
+    BoxSizer3->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     Button4 = new wxButton(Panel2, ID_BUTTON9, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON9"));
+    Button4->Disable();
     BoxSizer3->Add(Button4, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
     StaticBoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND, 0);
-    BoxSizer2->Add(StaticBoxSizer2, 1, wxALL|wxEXPAND, 5);
+    BoxSizer2->Add(StaticBoxSizer2, 0, wxALL|wxEXPAND, 5);
     Panel2->SetSizer(BoxSizer2);
     BoxSizer2->Fit(Panel2);
     BoxSizer2->SetSizeHints(Panel2);
@@ -143,18 +154,48 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     DirDialog1 = new wxDirDialog(this, _("Select directory"), wxEmptyString, wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, _T("wxDirDialog"));
 
-    Connect(ID_LISTBOX1,wxEVT_COMMAND_LISTBOX_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnListBox1Select);
+    Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemSelect);
+    Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_DESELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemDeselect);
+    Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_RIGHT_CLICK,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemRClick);
     Connect(ID_BUTTON2,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnAddFileClick);
     Connect(ID_BUTTON5,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnAddFolderClick);
     Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveClick);
-    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveAllClick);
+    Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveAllOriginFilesClick);
     Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnEncryptClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnAbout);
     //*)
 
+    // 原始文件列表右键弹出菜单
+    fileItemMenu = new FileItemMenu();
+    fileItemMenu->Append(ID_MENU_ORIGINAL_FILE_COPY, "Copy");
+    fileItemMenu->Append(ID_MENU_ORIGINAL_FILE_REMOVE, "Remove");
+    fileItemMenu->Append(ID_MENU_ORIGINAL_FILE_OPEN_IN_FILE_EXPLORER, "Open in file explorer");
+    Connect(ID_MENU_ORIGINAL_FILE_COPY, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&kwencryptFrame::OnMenuItemCopyOriginalFileSelected);
+    Connect(ID_MENU_ORIGINAL_FILE_REMOVE, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&kwencryptFrame::OnMenuItemRemoveOriginalFileSelected);
+    Connect(ID_MENU_ORIGINAL_FILE_OPEN_IN_FILE_EXPLORER, wxEVT_COMMAND_MENU_SELECTED, (wxObjectEventFunction)&kwencryptFrame::OnMenuItemOpenOriginalFileInExplorerSelected);
 
-    ListBox1->SetDropTarget(new DnDialogFile(this)); // 拖放对话框
+    listOriginFiles->SetDropTarget(new DnDialogFile(this)); // 设置原始文件的拖放对话框
+    int listCtrlWidth = listOriginFiles->GetSize().GetWidth();
+    wxListItem col0; // 第0列表头
+    col0.SetId(0);
+    col0.SetText("File Name");
+    col0.SetWidth(listCtrlWidth / 2);
+    col0.SetAlign(wxLIST_FORMAT_LEFT);
+    listOriginFiles->InsertColumn(0, col0);
+    wxListItem col1; // 第2列表头
+    col1.SetId(1);
+    col1.SetText("Size");
+    col1.SetWidth(listCtrlWidth / 5);
+    col1.SetAlign(wxLIST_FORMAT_LEFT);
+    listOriginFiles->InsertColumn(1, col1);
+    wxListItem col2; // 第3列表头
+    col2.SetId(2);
+    col2.SetText("Type");
+    col2.SetWidth(listCtrlWidth / 5);
+    col2.SetAlign(wxLIST_FORMAT_LEFT);
+    listOriginFiles->InsertColumn(2, col2);
+
     printf("[Log] Window initialization successful!\n");
 }
 
@@ -178,37 +219,17 @@ void kwencryptFrame::OnAbout(wxCommandEvent& event)
     wxMessageBox(msg, _("Welcome to kw-encryptor"));
 }
 
-
 void kwencryptFrame::OnClose(wxCloseEvent& event)
 {
 }
 
-void kwencryptFrame::OnListBox1Select(wxCommandEvent& event)
-{
-}
-
-// 清除选中文件
-void kwencryptFrame::OnbtnRemoveClick(wxCommandEvent& event)
-{
-    wxArrayInt selects;
-    int n = ListBox1->GetSelections(selects);
-    for (int i = n - 1; i >= 0; i--) {
-        ListBox1->Delete(selects[i]);
-    }
-}
-
-// 添加单个文件
+// 添加单个文件（wxFileDialog 默认会将快捷方式 .lnk 转成绝对路径，不知道如何禁用）
 void kwencryptFrame::OnbtnAddFileClick(wxCommandEvent& event)
 {
     if (FileDialog1->ShowModal() == wxID_CANCEL) return;
-    wxString filepath = FileDialog1->GetPath();
-    ListBox1->Append(filepath);
-    // 消除重复项
-    if (!ListBox1->IsEmpty()) {
-        for (size_t i = ListBox1->GetCount() - 1; i >= 1; i--) {
-            if (ListBox1->GetString(i) == ListBox1->GetString(i - 1)) ListBox1->Delete(i);
-        }
-    }
+    wxFileName fileName = FileDialog1->GetPath();
+    fileItems.push_back(FileItem(fileName.GetFullPath(), fileName.GetHumanReadableSize(), "File"));
+    overwriteListCtrl(listOriginFiles, fileItems);
 }
 
 // 添加单个目录
@@ -216,19 +237,28 @@ void kwencryptFrame::OnbtnAddFolderClick(wxCommandEvent& event)
 {
     if (DirDialog1->ShowModal() == wxID_CANCEL) return;
     wxString folderPath = DirDialog1->GetPath();
-    ListBox1->Append(folderPath);
-    // 消除重复项
-    if (!ListBox1->IsEmpty()) {
-        for (size_t i = ListBox1->GetCount() - 1; i >= 1; i--) {
-            if (ListBox1->GetString(i) == ListBox1->GetString(i - 1)) ListBox1->Delete(i);
-        }
-    }
+    fileItems.push_back(FileItem(folderPath, "", "Folder"));
+    overwriteListCtrl(listOriginFiles, fileItems);
 }
 
-// 清除所有文件
-void kwencryptFrame::OnbtnRemoveAllClick(wxCommandEvent& event)
+// 移除选中的原始文件
+void kwencryptFrame::OnbtnRemoveClick(wxCommandEvent& event)
 {
-    ListBox1->Clear();
+    auto it = fileItems.begin();
+    while (it != fileItems.end()) {
+        if (it->selected) it = fileItems.erase(it);
+        else it++;
+    }
+    overwriteListCtrl(listOriginFiles, fileItems);
+}
+
+// 移除所有原始文件
+void kwencryptFrame::OnbtnRemoveAllOriginFilesClick(wxCommandEvent& event)
+{
+    if (fileItems.empty()) return;
+    fileItems.clear();
+    listOriginFiles->DeleteAllItems();
+    listOriginFiles->Refresh();
 }
 
 // 加密文件
@@ -236,4 +266,48 @@ void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
 {
 }
 
+// 右键列表item
+void kwencryptFrame::OnlistOriginFilesItemRClick(wxListEvent& event)
+{
+    fileItemMenu->itemIndex = event.GetIndex();
+    listOriginFiles->PopupMenu(fileItemMenu);
+}
 
+// 通过右键菜单复制初始文件列表item
+void kwencryptFrame::OnMenuItemCopyOriginalFileSelected(wxCommandEvent& event) {
+    //printf("[Log] copy %d\n", fileItemMenu->itemIndex);
+    if (wxTheClipboard->Open()) {
+        // This data objects are held by the clipboard,
+        // so do not delete them in the app.
+        wxTheClipboard->SetData( new wxTextDataObject(fileItems[fileItemMenu->itemIndex].fileName.GetFullPath()) );
+        wxTheClipboard->Close();
+    }
+}
+
+// 通过右键菜单移除初始文件列表item
+void kwencryptFrame::OnMenuItemRemoveOriginalFileSelected(wxCommandEvent& event)
+{
+    auto it = fileItems.begin();
+    for (int i = 0; i < fileItemMenu->itemIndex; i++) it++;
+    fileItems.erase(it);
+    overwriteListCtrl(listOriginFiles, fileItems);
+}
+
+// 通过右键菜单在文件管理器中浏览文件
+void kwencryptFrame::OnMenuItemOpenOriginalFileInExplorerSelected(wxCommandEvent& event)
+{
+    wxFileName fileName = fileItems[fileItemMenu->itemIndex].fileName;
+    wxExecute(wxString("explorer.exe ") << fileName.GetPath());
+}
+
+// item 选中
+void kwencryptFrame::OnlistOriginFilesItemSelect(wxListEvent& event)
+{
+    fileItems[event.GetIndex()].selected = true;
+}
+
+// item 取消选中
+void kwencryptFrame::OnlistOriginFilesItemDeselect(wxListEvent& event)
+{
+    fileItems[event.GetIndex()].selected = false;
+}

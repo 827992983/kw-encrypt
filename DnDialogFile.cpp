@@ -2,32 +2,31 @@
 #include <wx/listbox.h>
 #include <wx/filename.h>
 #include <wx/msgdlg.h>
+#include <algorithm>
+#include <list>
+#include "listData.h"
+
+// wxListCtrl 的排序太难用了，这里我用vector来存数据，用<algorithm>的排序函数，每次排序后将vector里的数据覆盖到listCtrl
 
 // 拖放文件触发该函数
 bool DnDialogFile::OnDropFiles(wxCoord, wxCoord, const wxArrayString& filepaths)
 {
-    wxListBox *box = frame->ListBox1;
     wxMessageOutputStderr out = wxMessageOutputStderr(stdout);
-    //wxArrayString unExistsFiles;
     for (size_t i = 0; i < filepaths.GetCount(); i++) {
-        wxFileName file_to_check = filepaths[i];
-        box->Append(file_to_check.GetFullPath());
-        if (!file_to_check.FileExists()) {
-            out.Printf("[Log] Folder: %s\n", file_to_check.GetFullPath());
+        wxFileName file = filepaths[i];
+        if (file.FileExists()) {
+            wxString fileSize = file.GetHumanReadableSize();
+            wxString fileType("File");
+            fileItems.push_back(FileItem(file, fileSize, fileType));
+        } else if (file.DirExists()) {
+            wxString fileSize("");
+            wxString fileType("Folder");
+            fileItems.push_back(FileItem(file, fileSize, fileType));
         } else {
-            out.Printf("[Log] File: %s\n", file_to_check.GetFullPath());
-        }
-
-    }
-
-    // 消除重复项
-    if (!box->IsEmpty()) {
-        for (size_t i = box->GetCount() - 1; i >= 1; i--) {
-            if (box->GetString(i) == box->GetString(i - 1)) box->Delete(i);
+            out.Printf("[Error] \"%s\" is not a file or a folder!", file.GetFullPath());
         }
     }
-
-
+    overwriteListCtrl(frame->listOriginFiles, fileItems);
     return true;
 }
 
