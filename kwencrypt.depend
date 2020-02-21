@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1581826787 source:d:\proj\kwencrypt\kwencryptapp.cpp
+1582265807 source:d:\proj\kwencrypt\kwencryptapp.cpp
 	"kwencryptApp.h"
 	"kwencryptMain.h"
 	<wx/image.h>
 
-1581826787 d:\proj\kwencrypt\kwencryptapp.h
+1582265813 d:\proj\kwencrypt\kwencryptapp.h
 	<wx/app.h>
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\app.h
@@ -1690,7 +1690,7 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1582214686 d:\proj\kwencrypt\kwencryptmain.h
+1582268614 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
 	<wx/dirdlg.h>
 	<wx/filedlg.h>
@@ -1698,8 +1698,10 @@
 	<wx/listctrl.h>
 	<wx/menu.h>
 	<wx/panel.h>
+	<wx/progdlg.h>
 	<wx/sizer.h>
 	<wx/statusbr.h>
+	<wx/textdlg.h>
 	"FileItemMenu.h"
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\menu.h
@@ -1823,7 +1825,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582263547 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582267777 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -2630,4 +2632,27 @@
 	"wx/dataobj.h"
 
 1582263266 d:\proj\kwencrypt\res\file.ico
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\textdlg.h
+	"wx/generic/textdlgg.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\generic\textdlgg.h
+	"wx/defs.h"
+	"wx/dialog.h"
+	"wx/valtext.h"
+	"wx/textctrl.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\valtext.h
+	"wx/defs.h"
+	"wx/validate.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\progdlg.h
+	"wx/defs.h"
+	"wx/generic/progdlgg.h"
+	"wx/msw/progdlg.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\generic\progdlgg.h
+	"wx/dialog.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\progdlg.h
 

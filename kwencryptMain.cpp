@@ -52,15 +52,14 @@ const long kwencryptFrame::ID_BUTTON5 = wxNewId();
 const long kwencryptFrame::ID_BUTTON3 = wxNewId();
 const long kwencryptFrame::ID_BUTTON1 = wxNewId();
 const long kwencryptFrame::ID_BUTTON4 = wxNewId();
-const long kwencryptFrame::ID_LISTCTRL2 = wxNewId();
 const long kwencryptFrame::ID_BUTTON6 = wxNewId();
-const long kwencryptFrame::ID_BUTTON7 = wxNewId();
-const long kwencryptFrame::ID_BUTTON9 = wxNewId();
 const long kwencryptFrame::ID_PANEL2 = wxNewId();
 const long kwencryptFrame::ID_PANEL1 = wxNewId();
 const long kwencryptFrame::idMenuQuit = wxNewId();
 const long kwencryptFrame::idMenuAbout = wxNewId();
 const long kwencryptFrame::ID_STATUSBAR1 = wxNewId();
+const long kwencryptFrame::ID_PASSWORDENTRYDIALOG1 = wxNewId();
+const long kwencryptFrame::ID_PROGRESSDIALOG1 = wxNewId();
 //*)
 
 const long kwencryptFrame::ID_MENU_ORIGINAL_FILE_COPY = wxNewId();
@@ -78,7 +77,6 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     //(*Initialize(kwencryptFrame)
     wxBoxSizer* BoxSizer1;
     wxBoxSizer* BoxSizer2;
-    wxBoxSizer* BoxSizer3;
     wxBoxSizer* BoxSizer4;
     wxMenu* Menu1;
     wxMenu* Menu2;
@@ -86,7 +84,6 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     wxMenuItem* MenuItem1;
     wxMenuItem* MenuItem2;
     wxStaticBoxSizer* StaticBoxSizer1;
-    wxStaticBoxSizer* StaticBoxSizer2;
 
     Create(parent, wxID_ANY, _("kw-encryptor"), wxDefaultPosition, wxDefaultSize, wxCAPTION|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxCLIP_CHILDREN, _T("wxID_ANY"));
     SetClientSize(wxSize(800,500));
@@ -110,24 +107,10 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     btnEncrypt = new wxButton(Panel2, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
     btnEncrypt->Disable();
     BoxSizer4->Add(btnEncrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
+    btnDecrypt = new wxButton(Panel2, ID_BUTTON6, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    BoxSizer4->Add(btnDecrypt, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
     StaticBoxSizer1->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
     BoxSizer2->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND, 5);
-    StaticBoxSizer2 = new wxStaticBoxSizer(wxHORIZONTAL, Panel2, _("Drag a .KWE file you want to decrypt to the box below"));
-    listKweFile = new wxListCtrl(Panel2, ID_LISTCTRL2, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTCTRL2"));
-    StaticBoxSizer2->Add(listKweFile, 5, wxALL|wxEXPAND, 1);
-    BoxSizer3 = new wxBoxSizer(wxVERTICAL);
-    Button1 = new wxButton(Panel2, ID_BUTTON6, _("Choose .KWE File"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
-    Button1->Disable();
-    BoxSizer3->Add(Button1, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
-    Button2 = new wxButton(Panel2, ID_BUTTON7, _("Remove"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON7"));
-    Button2->Disable();
-    BoxSizer3->Add(Button2, 0, wxALL|wxEXPAND, 1);
-    BoxSizer3->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
-    Button4 = new wxButton(Panel2, ID_BUTTON9, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON9"));
-    Button4->Disable();
-    BoxSizer3->Add(Button4, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
-    StaticBoxSizer2->Add(BoxSizer3, 1, wxALL|wxEXPAND, 0);
-    BoxSizer2->Add(StaticBoxSizer2, 0, wxALL|wxEXPAND, 5);
     Panel2->SetSizer(BoxSizer2);
     BoxSizer2->Fit(Panel2);
     BoxSizer2->SetSizeHints(Panel2);
@@ -153,6 +136,8 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     SetStatusBar(StatusBar1);
     FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     DirDialog1 = new wxDirDialog(this, _("Select directory"), wxEmptyString, wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, _T("wxDirDialog"));
+    FileDialog2 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    PasswordEntryDialog1 = new wxPasswordEntryDialog(this, wxEmptyString, _("Enter Password"), wxEmptyString, wxCANCEL|wxCENTRE|wxOK, wxDefaultPosition);
 
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemSelect);
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_DESELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemDeselect);
@@ -162,6 +147,7 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveClick);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveAllOriginFilesClick);
     Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnEncryptClick);
+    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnButton1Click);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnAbout);
     //*)
@@ -215,10 +201,11 @@ void kwencryptFrame::OnQuit(wxCommandEvent& event)
     Close();
 }
 
+// About 菜单
 void kwencryptFrame::OnAbout(wxCommandEvent& event)
 {
     wxString msg = wxbuildinfo(long_f);
-    wxMessageBox(msg, _("Welcome to kw-encryptor"));
+    wxMessageBox(msg, _("https://github.com/Kwansy98"));
 }
 
 void kwencryptFrame::OnClose(wxCloseEvent& event)
@@ -312,4 +299,12 @@ void kwencryptFrame::OnlistOriginFilesItemSelect(wxListEvent& event)
 void kwencryptFrame::OnlistOriginFilesItemDeselect(wxListEvent& event)
 {
     fileItems[event.GetIndex()].selected = false;
+}
+
+// 打开 *.KWE 文件
+void kwencryptFrame::OnButton1Click(wxCommandEvent& event)
+{
+    if (FileDialog2->ShowModal() == wxID_CANCEL) return;
+    if (PasswordEntryDialog1->ShowModal() == wxID_CANCEL) return;
+    //ProgressDialog1->ShowModal();
 }

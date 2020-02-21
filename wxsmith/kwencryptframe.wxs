@@ -74,6 +74,14 @@
 												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
 												<border>1</border>
 											</object>
+											<object class="sizeritem">
+												<object class="wxButton" name="ID_BUTTON6" variable="btnDecrypt" member="yes">
+													<label>Decrypt</label>
+													<handler function="OnButton1Click" entry="EVT_BUTTON" />
+												</object>
+												<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
+												<border>1</border>
+											</object>
 										</object>
 										<flag>wxALL|wxEXPAND</flag>
 										<option>1</option>
@@ -82,57 +90,6 @@
 								<flag>wxALL|wxEXPAND</flag>
 								<border>5</border>
 								<option>1</option>
-							</object>
-							<object class="sizeritem">
-								<object class="wxStaticBoxSizer" variable="StaticBoxSizer2" member="no">
-									<label>Drag a .KWE file you want to decrypt to the box below</label>
-									<object class="sizeritem">
-										<object class="wxListCtrl" name="ID_LISTCTRL2" variable="listKweFile" member="yes">
-											<style>wxLC_REPORT</style>
-										</object>
-										<flag>wxALL|wxEXPAND</flag>
-										<border>1</border>
-										<option>5</option>
-									</object>
-									<object class="sizeritem">
-										<object class="wxBoxSizer" variable="BoxSizer3" member="no">
-											<orient>wxVERTICAL</orient>
-											<object class="sizeritem">
-												<object class="wxButton" name="ID_BUTTON6" variable="Button1" member="yes">
-													<label>Choose .KWE File</label>
-													<enabled>0</enabled>
-												</object>
-												<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
-												<border>1</border>
-											</object>
-											<object class="sizeritem">
-												<object class="wxButton" name="ID_BUTTON7" variable="Button2" member="yes">
-													<label>Remove</label>
-													<enabled>0</enabled>
-												</object>
-												<flag>wxALL|wxEXPAND</flag>
-												<border>1</border>
-											</object>
-											<object class="spacer">
-												<flag>wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL</flag>
-												<border>5</border>
-												<option>1</option>
-											</object>
-											<object class="sizeritem">
-												<object class="wxButton" name="ID_BUTTON9" variable="Button4" member="yes">
-													<label>Decrypt</label>
-													<enabled>0</enabled>
-												</object>
-												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
-												<border>1</border>
-											</object>
-										</object>
-										<flag>wxALL|wxEXPAND</flag>
-										<option>1</option>
-									</object>
-								</object>
-								<flag>wxALL|wxEXPAND</flag>
-								<border>5</border>
 							</object>
 						</object>
 					</object>
@@ -174,6 +131,16 @@
 		<object class="wxDirDialog" variable="DirDialog1" member="yes">
 			<message>Select directory</message>
 			<style>wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST</style>
+		</object>
+		<object class="wxFileDialog" variable="FileDialog2" member="yes">
+			<message>Select file</message>
+			<wildcard>*.kwe</wildcard>
+			<style>wxFD_OPEN</style>
+		</object>
+		<object class="wxPasswordEntryDialog" name="ID_PASSWORDENTRYDIALOG1" variable="PasswordEntryDialog1" member="yes" />
+		<object class="wxProgressDialog" name="ID_PROGRESSDIALOG1" variable="ProgressDialog1" member="yes">
+			<title></title>
+			<message></message>
 		</object>
 	</object>
 </wxsmith>

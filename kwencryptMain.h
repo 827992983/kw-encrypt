@@ -19,8 +19,10 @@
 #include <wx/listctrl.h>
 #include <wx/menu.h>
 #include <wx/panel.h>
+#include <wx/progdlg.h>
 #include <wx/sizer.h>
 #include <wx/statusbr.h>
+#include <wx/textdlg.h>
 //*)
 #include "FileItemMenu.h"
 
@@ -49,6 +51,7 @@ class kwencryptFrame: public wxFrame
         void OnlistOriginFilesItemRClick(wxListEvent& event);
         void OnlistOriginFilesItemSelect(wxListEvent& event);
         void OnlistOriginFilesItemDeselect(wxListEvent& event);
+        void OnButton1Click(wxCommandEvent& event);
         //*)
         void OnMenuItemCopyOriginalFileSelected(wxCommandEvent& event);
         void OnMenuItemRemoveOriginalFileSelected(wxCommandEvent& event);
@@ -61,15 +64,14 @@ class kwencryptFrame: public wxFrame
         static const long ID_BUTTON3;
         static const long ID_BUTTON1;
         static const long ID_BUTTON4;
-        static const long ID_LISTCTRL2;
         static const long ID_BUTTON6;
-        static const long ID_BUTTON7;
-        static const long ID_BUTTON9;
         static const long ID_PANEL2;
         static const long ID_PANEL1;
         static const long idMenuQuit;
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
+        static const long ID_PASSWORDENTRYDIALOG1;
+        static const long ID_PROGRESSDIALOG1;
         //*)
         static const long ID_MENU_ORIGINAL_FILE_COPY;
         static const long ID_MENU_ORIGINAL_FILE_REMOVE;
@@ -77,20 +79,20 @@ class kwencryptFrame: public wxFrame
 
 
         //(*Declarations(kwencryptFrame)
-        wxButton* Button1;
-        wxButton* Button2;
-        wxButton* Button4;
         wxButton* btnAddFile;
         wxButton* btnAddFolder;
+        wxButton* btnDecrypt;
         wxButton* btnEncrypt;
         wxButton* btnRemove;
         wxButton* btnRemoveAllOriginFiles;
         wxDirDialog* DirDialog1;
         wxFileDialog* FileDialog1;
-        wxListCtrl* listKweFile;
+        wxFileDialog* FileDialog2;
         wxListCtrl* listOriginFiles;
         wxPanel* Panel1;
         wxPanel* Panel2;
+        wxPasswordEntryDialog* PasswordEntryDialog1;
+        wxProgressDialog* ProgressDialog1;
         wxStatusBar* StatusBar1;
         //*)
         FileItemMenu *fileItemMenu;
