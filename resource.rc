@@ -1,3 +1,7 @@
-aaaa ICON "wx/msw/std.ico"
-
+//aaaa ICON "wx/msw/std.ico"
+aMAINICON ICON "res/lock.ico"
+FILEICON ICON "res/file.ico"
+FOLDERICON ICON "res/folder.ico"
 #include "wx/msw/wx.rc"
+
+

@@ -1803,7 +1803,7 @@
 	"wx/list.h"
 	"wx/dynarray.h"
 
-1514140570 source:d:\proj\kwencrypt\resource.rc
+1582264884 source:d:\proj\kwencrypt\resource.rc
 	"wx/msw/wx.rc"
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\wx.rc
@@ -1823,7 +1823,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582215410 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582263547 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -2557,14 +2557,16 @@
 	<wx/string.h>
 	<wx/filename.h>
 
-1582206298 d:\proj\kwencrypt\listdata.h
+1582264723 d:\proj\kwencrypt\listdata.h
 	<vector>
 	<wx/string.h>
 	<wx/filename.h>
 	<wx/listctrl.h>
 	<algorithm>
+	<wx/icon.h>
+	<wx/imaglist.h>
 
-1582211158 source:d:\proj\kwencrypt\listdata.cpp
+1582264793 source:d:\proj\kwencrypt\listdata.cpp
 	"listData.h"
 
 1582201512 source:d:\proj\kwencrypt\fileitemmenu.cpp
@@ -2626,4 +2628,6 @@
 	"wx/list.h"
 	"wx/module.h"
 	"wx/dataobj.h"
+
+1582263266 d:\proj\kwencrypt\res\file.ico
 

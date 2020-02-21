@@ -10,6 +10,8 @@
 #include <wx/filename.h>
 #include <wx/listctrl.h>
 #include <algorithm>
+#include <wx/icon.h>
+#include <wx/imaglist.h>
 
 class FileItem {
 public:
@@ -21,6 +23,7 @@ public:
 };
 
 extern std::vector<FileItem> fileItems;
+
 
 // 对list排序并去重，然后填充listctrl
 void overwriteListCtrl(wxListCtrl *listCtrl, std::vector<FileItem> &files);

@@ -166,6 +166,8 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnAbout);
     //*)
 
+    SetIcon(wxICON(aMAINICON));
+
     // 原始文件列表右键弹出菜单
     fileItemMenu = new FileItemMenu();
     fileItemMenu->Append(ID_MENU_ORIGINAL_FILE_COPY, "Copy");
