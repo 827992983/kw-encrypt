@@ -1825,7 +1825,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582267777 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582382796 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -1833,8 +1833,10 @@
 	"listData.h"
 	"FileItemMenu.h"
 	<wx/clipbrd.h>
+	<wx/dir.h>
 	<wx/intl.h>
 	<wx/string.h>
+	"wxDirTraverserImplement.h"
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msgdlg.h
 	"wx/defs.h"
@@ -1938,7 +1940,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\os2\msgdlg.h
 
-1582189463 source:d:\proj\kwencrypt\dndialogfile.cpp
+1582381162 source:d:\proj\kwencrypt\dndialogfile.cpp
 	"DnDialogFile.h"
 	<wx/listbox.h>
 	<wx/filename.h>
@@ -1946,6 +1948,7 @@
 	<algorithm>
 	<list>
 	"listData.h"
+	<wx/dir.h>
 
 1582188918 d:\proj\kwencrypt\dndialogfile.h
 	<wx/dnd.h>
@@ -2655,4 +2658,18 @@
 	"wx/dialog.h"
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\progdlg.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\dir.h
+	"wx/longlong.h"
+	"wx/string.h"
+	"wx/filefn.h"
+
+1582382263 source:d:\proj\kwencrypt\src\wxdirtraverserimplement.cpp
+	"wxDirTraverserImplement.h"
+
+1582382751 d:\proj\kwencrypt\include\wxdirtraverserimplement.h
+	<wx/dir.h>
+
+1582382751 d:\proj\kwencrypt\wxdirtraverserimplement.h
+	<wx/dir.h>
 

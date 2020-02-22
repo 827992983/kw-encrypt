@@ -14,6 +14,9 @@
 #include "listData.h"
 #include "FileItemMenu.h"
 #include <wx/clipbrd.h>
+#include <wx/dir.h>
+#include "wxDirTraverserImplement.h"
+
 //(*InternalHeaders(kwencryptFrame)
 #include <wx/intl.h>
 #include <wx/string.h>
@@ -105,7 +108,6 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     BoxSizer4->Add(btnRemoveAllOriginFiles, 0, wxALL|wxEXPAND, 1);
     BoxSizer4->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     btnEncrypt = new wxButton(Panel2, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    btnEncrypt->Disable();
     BoxSizer4->Add(btnEncrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
     btnDecrypt = new wxButton(Panel2, ID_BUTTON6, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
     BoxSizer4->Add(btnDecrypt, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
@@ -137,7 +139,7 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     DirDialog1 = new wxDirDialog(this, _("Select directory"), wxEmptyString, wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, _T("wxDirDialog"));
     FileDialog2 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
-    PasswordEntryDialog1 = new wxPasswordEntryDialog(this, wxEmptyString, _("Enter Password"), wxEmptyString, wxCANCEL|wxCENTRE|wxOK, wxDefaultPosition);
+    PasswordEntryDialog1 = new wxPasswordEntryDialog(this, _("Enter password"), wxEmptyString, wxEmptyString, wxCANCEL|wxCENTRE|wxOK, wxDefaultPosition);
 
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemSelect);
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_DESELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemDeselect);
@@ -217,7 +219,7 @@ void kwencryptFrame::OnbtnAddFileClick(wxCommandEvent& event)
 {
     if (FileDialog1->ShowModal() == wxID_CANCEL) return;
     wxFileName fileName = FileDialog1->GetPath();
-    fileItems.push_back(FileItem(fileName.GetFullPath(), fileName.GetHumanReadableSize(), "File"));
+    fileItems.push_back(FileItem(fileName.GetFullPath(), fileName.GetSize().ToString(), "File"));
     overwriteListCtrl(listOriginFiles, fileItems);
 }
 
@@ -226,7 +228,7 @@ void kwencryptFrame::OnbtnAddFolderClick(wxCommandEvent& event)
 {
     if (DirDialog1->ShowModal() == wxID_CANCEL) return;
     wxString folderPath = DirDialog1->GetPath();
-    fileItems.push_back(FileItem(folderPath, "", "Folder"));
+    fileItems.push_back(FileItem(folderPath, wxDir::GetTotalSize(wxFileName(folderPath).GetFullPath()).ToString(), "Folder"));
     overwriteListCtrl(listOriginFiles, fileItems);
 }
 
@@ -251,8 +253,26 @@ void kwencryptFrame::OnbtnRemoveAllOriginFilesClick(wxCommandEvent& event)
 }
 
 // 加密文件
+/**
+正式实现之前先熟悉一下 wxDir 的API
+**/
+
 void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
 {
+    wxMessageOutputStderr out = wxMessageOutputStderr(stdout);
+//    wxArrayString files;
+//    wxDir::GetAllFiles("c:\\users\\gsy\\desktop\\listctrl", &files);
+//    for (size_t i = 0; i < files.GetCount(); i++) {
+//        out.Printf("[Log] %d %s\n", i, files[i]);
+//    }
+
+    wxArrayString files;
+    wxDirTraverserImplement traverser(files);
+    wxDir dir(wxGetCwd());
+    dir.Traverse(traverser);
+    for (size_t i = 0; i < files.GetCount(); i++) {
+        out.Printf("[Log] %d %s\n", i, files[i]);
+    }
 }
 
 // 右键列表item

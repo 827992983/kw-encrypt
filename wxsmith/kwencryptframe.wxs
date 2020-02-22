@@ -68,7 +68,6 @@
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON4" variable="btnEncrypt" member="yes">
 													<label>Encrypt</label>
-													<enabled>0</enabled>
 													<handler function="OnbtnEncryptClick" entry="EVT_BUTTON" />
 												</object>
 												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
@@ -137,7 +136,10 @@
 			<wildcard>*.kwe</wildcard>
 			<style>wxFD_OPEN</style>
 		</object>
-		<object class="wxPasswordEntryDialog" name="ID_PASSWORDENTRYDIALOG1" variable="PasswordEntryDialog1" member="yes" />
+		<object class="wxPasswordEntryDialog" name="ID_PASSWORDENTRYDIALOG1" variable="PasswordEntryDialog1" member="yes">
+			<caption></caption>
+			<message>Enter password</message>
+		</object>
 		<object class="wxProgressDialog" name="ID_PROGRESSDIALOG1" variable="ProgressDialog1" member="yes">
 			<title></title>
 			<message></message>
