@@ -65,6 +65,7 @@
 		<Unit filename="DnDialogFile.h" />
 		<Unit filename="FileItemMenu.cpp" />
 		<Unit filename="FileItemMenu.h" />
+		<Unit filename="ZipUtil.h" />
 		<Unit filename="kwencryptApp.cpp" />
 		<Unit filename="kwencryptApp.h" />
 		<Unit filename="kwencryptMain.cpp" />

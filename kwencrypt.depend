@@ -1825,7 +1825,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582435668 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582470319 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -1835,6 +1835,9 @@
 	<wx/clipbrd.h>
 	<wx/dir.h>
 	"wxDirTraverserImplement.h"
+	<wx/wfstream.h>
+	<wx/zipstrm.h>
+	"ZipUtil.h"
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -2672,4 +2675,36 @@
 
 1582382751 d:\proj\kwencrypt\wxdirtraverserimplement.h
 	<wx/dir.h>
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\wfstream.h
+	"wx/defs.h"
+	"wx/object.h"
+	"wx/string.h"
+	"wx/stream.h"
+	"wx/file.h"
+	"wx/ffile.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\ffile.h
+	"wx/defs.h"
+	"wx/string.h"
+	"wx/filefn.h"
+	"wx/convauto.h"
+	<stdio.h>
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\zipstrm.h
+	"wx/defs.h"
+	"wx/archive.h"
+	"wx/filename.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\archive.h
+	"wx/defs.h"
+	"wx/stream.h"
+	"wx/filename.h"
+	<iterator>
+	<utility>
+
+1582469382 d:\proj\kwencrypt\ziputil.h
+	<wx/string.h>
+	<wx/wfstream.h>
+	<wx/zipstrm.h>
 
