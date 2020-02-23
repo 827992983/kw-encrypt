@@ -16,6 +16,8 @@
 #include <wx/clipbrd.h>
 #include <wx/dir.h>
 #include "wxDirTraverserImplement.h"
+#include <wx/wfstream.h>
+#include <wx/zipstrm.h>
 
 //(*InternalHeaders(kwencryptFrame)
 #include <wx/intl.h>
@@ -252,29 +254,6 @@ void kwencryptFrame::OnbtnRemoveAllOriginFilesClick(wxCommandEvent& event)
     listOriginFiles->Refresh();
 }
 
-// 加密文件
-/**
-正式实现之前先熟悉一下 wxDir 的API
-**/
-
-void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
-{
-    wxMessageOutputStderr out = wxMessageOutputStderr(stdout);
-//    wxArrayString files;
-//    wxDir::GetAllFiles("c:\\users\\gsy\\desktop\\listctrl", &files);
-//    for (size_t i = 0; i < files.GetCount(); i++) {
-//        out.Printf("[Log] %d %s\n", i, files[i]);
-//    }
-
-    wxArrayString files;
-    wxDirTraverserImplement traverser(files);
-    wxDir dir(wxGetCwd());
-    dir.Traverse(traverser);
-    for (size_t i = 0; i < files.GetCount(); i++) {
-        out.Printf("[Log] %d %s\n", i, files[i]);
-    }
-}
-
 // 右键列表item
 void kwencryptFrame::OnlistOriginFilesItemRClick(wxListEvent& event)
 {
@@ -328,3 +307,79 @@ void kwencryptFrame::OnButton1Click(wxCommandEvent& event)
     if (PasswordEntryDialog1->ShowModal() == wxID_CANCEL) return;
     //ProgressDialog1->ShowModal();
 }
+
+
+// 加密文件
+/**
+正式实现之前先熟悉一下 wxDir 的API
+**/
+
+void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
+{
+    wxMessageOutputStderr os = wxMessageOutputStderr(stdout);
+//    wxArrayString files;
+//    wxDirTraverserImplement traverser(files);
+//    wxDir dir(wxGetCwd());
+//    dir.Traverse(traverser);
+//    for (size_t i = 0; i < files.GetCount(); i++) {
+//        os.Printf("[Log] %d %s\n", i, files[i]);
+//    }
+
+    wxArrayString paths_to_encrypt; // 原始文件的绝对路径，用于加密
+    for (size_t i = 0; i < fileItems.size(); i++) {
+        if (fileItems[i].fileName.Exists()) {
+            paths_to_encrypt.Add(fileItems[i].fileName.GetFullPath());
+            if (!fileItems[i].fileName.FileExists()) {
+                wxDirTraverserImplement traverser(paths_to_encrypt);
+                wxDir dir(fileItems[i].fileName.GetFullPath());
+                dir.Traverse(traverser);
+            }
+        } else {
+            os.Printf("[Error] %s is not a file or a directory!", fileItems[i].fileName.GetFullPath());
+            wxMessageOutput::Get()->Printf("[Error] %s is not a file or a directory!", fileItems[i].fileName.GetFullPath());
+            return;
+        }
+
+    }
+
+    for (size_t i = 0; i < paths_to_encrypt.size(); i++) {
+        os.Printf("[Log] %s\n", paths_to_encrypt[i]);
+    }
+
+    // 压缩函数：传入绝对路径数组，wxZipOutputStream，将文件写入到压缩文件。
+
+    /**
+    加密过程：输入密码，将所有的文件和目录压缩成ZIP文件；加密ZIP文件
+    解密过程：解密ZIP文件；解压ZIP
+    **/
+
+    // 测试压缩文件API
+    bool bRet;
+    wxFileName zipFile( "c:\\users\\gsy\\desktop\\test.zip" );
+    wxFFileOutputStream out( zipFile.GetFullPath() );
+    bRet = out.IsOk();
+    wxZipOutputStream zip( out );
+    bRet = zip.IsOk();
+
+    wxFileName sourceFile( "c:\\users\\gsy\\desktop\\Xenos.log" );
+    wxFileInputStream in( sourceFile.GetFullPath());
+    bRet = in.IsOk();
+
+    //bRet = zip.PutNextEntry( sourceFile.GetFullPath() );
+    bRet = zip.PutNextEntry( sourceFile.GetFullName() );
+    zip.Write( in );
+
+    bRet = zip.Close();
+
+
+}
+
+
+
+
+
+
+
+
+
+
