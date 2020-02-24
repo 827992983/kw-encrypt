@@ -74,10 +74,16 @@ const long kwencryptFrame::ID_MENU_ORIGINAL_FILE_REMOVE = wxNewId();
 const long kwencryptFrame::ID_MENU_ORIGINAL_FILE_OPEN_IN_FILE_EXPLORER = wxNewId();
 
 
+DEFINE_EVENT_TYPE(MY_EVENT);
+
 BEGIN_EVENT_TABLE(kwencryptFrame,wxFrame)
     //(*EventTable(kwencryptFrame)
     //*)
+
+    EVT_COMMAND(wxID_ANY, MY_EVENT, kwencryptFrame::OnEncryptThreadEvent)
 END_EVENT_TABLE()
+
+
 
 kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
 {
@@ -112,10 +118,10 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     BoxSizer4->Add(btnRemoveAllOriginFiles, 0, wxALL|wxEXPAND, 1);
     BoxSizer4->Add(-1,-1,1, wxALL|wxALIGN_CENTER_HORIZONTAL|wxALIGN_CENTER_VERTICAL, 5);
     btnEncrypt = new wxButton(Panel2, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
-    BoxSizer4->Add(btnEncrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
+    BoxSizer4->Add(btnEncrypt, 0, wxALL|wxEXPAND, 1);
     btnDecrypt = new wxButton(Panel2, ID_BUTTON6, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
-    BoxSizer4->Add(btnDecrypt, 0, wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND, 1);
-    StaticBoxSizer1->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
+    BoxSizer4->Add(btnDecrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
+    StaticBoxSizer1->Add(BoxSizer4, 1, wxALL|wxEXPAND, 1);
     BoxSizer2->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND, 5);
     Panel2->SetSizer(BoxSizer2);
     BoxSizer2->Fit(Panel2);
@@ -153,10 +159,11 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTON3,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveClick);
     Connect(ID_BUTTON1,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnRemoveAllOriginFilesClick);
     Connect(ID_BUTTON4,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnEncryptClick);
-    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnButton1Click);
+    Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnBtnDecryptClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnAbout);
     //*)
+
 
     SetIcon(wxICON(aMAINICON));
 
@@ -302,15 +309,6 @@ void kwencryptFrame::OnlistOriginFilesItemDeselect(wxListEvent& event)
     fileItems[event.GetIndex()].selected = false;
 }
 
-// 打开 *.KWE 文件
-void kwencryptFrame::OnButton1Click(wxCommandEvent& event)
-{
-    if (FileDialog2->ShowModal() == wxID_CANCEL) return;
-    if (PasswordEntryDialog1->ShowModal() == wxID_CANCEL) return;
-    //ProgressDialog1->ShowModal();
-}
-
-
 // 加密文件
 /**
     加密过程：输入密码，将所有的文件和目录压缩成ZIP文件；加密ZIP文件
@@ -318,40 +316,44 @@ void kwencryptFrame::OnButton1Click(wxCommandEvent& event)
     **/
 void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
 {
-    btnEncrypt->Enable(false);
+    //btnEncrypt->Enable(false);
     wxMessageOutputStderr os = wxMessageOutputStderr(stdout);
     wxArrayString paths_to_encrypt; // 源文件绝对路径
     for (size_t i = 0; i < fileItems.size(); i++) {
         paths_to_encrypt.Add(fileItems[i].fileName.GetFullPath());
     }
 
-    wxString outputPath = wxGetCwd() << "\\encrypted.zip"; // 待会加一个选择输出文件路径的对话框
+    //wxString outputPath = wxGetCwd() << "\\out.zip"; // 待会加一个选择输出文件路径的对话框
+    wxString outputPath = "c:\\users\\gsy\\desktop\\out.zip";
 
-// 多线程怎么处理？
+    std::thread(&ZipUtil::writeToZip, paths_to_encrypt, outputPath, this).detach();
 
-    int ret = ZipUtil::writeToZip(paths_to_encrypt, outputPath);
-    if (ret == ZipUtil::SUCCESSFUL) {
-        os.Printf("[Log] Compression completed\n");
-    } else if (ret == ZipUtil::ERROR_WRITE_FILE_FAILED) {
-        os.Printf("[Error] ERROR_WRITE_FILE_FAILED\n");
-        if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
-    } else if (ret == ZipUtil::ERROR_READ_FILE_FAILED) {
-        os.Printf("[Error] ERROR_READ_FILE_FAILED\n");
-        if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
-    } else if (ret == ZipUtil::ERROR_FILE_CLOSE_FAILED) {
-        os.Printf("[Error] ERROR_FILE_CLOSE_FAILED\n");
-        if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
-    }
 
+
+//    int ret = ZipUtil::writeToZip(paths_to_encrypt, outputPath);
+//    if (ret == ZipUtil::SUCCESSFUL) {
+//        os.Printf("[Log] Compression completed\n");
+//    } else if (ret == ZipUtil::ERROR_WRITE_FILE_FAILED) {
+//        os.Printf("[Error] ERROR_WRITE_FILE_FAILED\n");
+//        if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
+//    } else if (ret == ZipUtil::ERROR_READ_FILE_FAILED) {
+//        os.Printf("[Error] ERROR_READ_FILE_FAILED\n");
+//        if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
+//    } else if (ret == ZipUtil::ERROR_FILE_CLOSE_FAILED) {
+//        os.Printf("[Error] ERROR_FILE_CLOSE_FAILED\n");
+//        if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
+//    }
 
 }
 
+void kwencryptFrame::OnEncryptThreadEvent(wxCommandEvent &event)
+{
+    printf("[Log] OnEncryptThreadEvent\n");
+}
 
 
-
-
-
-
-
-
-
+// 解密文件
+void kwencryptFrame::OnBtnDecryptClick(wxCommandEvent& event)
+{
+    printf("[Log] OnBtnDecryptClick\n");
+}

@@ -25,10 +25,16 @@
 #include <wx/textdlg.h>
 //*)
 #include "FileItemMenu.h"
+#include <wx/thread.h>
+
+
+DECLARE_EVENT_TYPE(MY_EVENT, -1);
 
 class kwencryptFrame: public wxFrame
 {
     friend class DnDialogFile;
+    friend class ZipUtil;
+
     public:
 
         kwencryptFrame(wxWindow* parent,wxWindowID id = -1);
@@ -51,11 +57,13 @@ class kwencryptFrame: public wxFrame
         void OnlistOriginFilesItemRClick(wxListEvent& event);
         void OnlistOriginFilesItemSelect(wxListEvent& event);
         void OnlistOriginFilesItemDeselect(wxListEvent& event);
-        void OnButton1Click(wxCommandEvent& event);
+        void OnBtnDecryptClick(wxCommandEvent& event);
         //*)
         void OnMenuItemCopyOriginalFileSelected(wxCommandEvent& event);
         void OnMenuItemRemoveOriginalFileSelected(wxCommandEvent& event);
         void OnMenuItemOpenOriginalFileInExplorerSelected(wxCommandEvent& event);
+
+        void OnEncryptThreadEvent(wxCommandEvent &event);
 
         //(*Identifiers(kwencryptFrame)
         static const long ID_LISTCTRL1;

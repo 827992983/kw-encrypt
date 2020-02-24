@@ -1,7 +1,9 @@
 #include <wx/string.h>
 #include <wx/wfstream.h>
 #include <wx/zipstrm.h>
-
+#include "kwencryptMain.h"
+#include <wx/progdlg.h>
+#include <wx/app.h>
 class ZipUtil {
 public:
     static const int SUCCESSFUL = 0;
@@ -9,26 +11,37 @@ public:
     static const int ERROR_READ_FILE_FAILED = 2;
     static const int ERROR_FILE_CLOSE_FAILED = 3;
 
+
     /**
     参数
     files：源文件和源目录的绝对路径，这些路径由用户拖拽或用对话框选取，目录路径不包含其子文件、子目录的路径
     outputPath：压缩文件的输出绝对路径
     **/
-    static int writeToZip(wxArrayString files, wxString outputPath) {
+    static int writeToZip(wxArrayString files, wxString outputPath, kwencryptFrame *frame)
+    {
+
+
         // 删除原输出文件
         if (wxFileExists(outputPath)) wxRemoveFile(outputPath);
+
         // 初始化 wxZipOutputStream
         wxFFileOutputStream out(wxFileName(outputPath).GetFullPath());
         if (!out.IsOk()) {
             out.Close();
             return ERROR_WRITE_FILE_FAILED;
         }
+
         wxZipOutputStream zip( out );
         if (!zip.IsOk()) {
             out.Close();
             zip.Close();
             return ERROR_WRITE_FILE_FAILED;
         }
+
+
+
+
+
         // 遍历源文件
         for (size_t i = 0; i < files.GetCount(); i++) {
             wxFileName fname(files[i]);
@@ -79,9 +92,27 @@ public:
                 }
             }
         }
+        printf("[Log] Compression completed\n");
+
+
+        //frame->btnEncrypt->Enable(true);
+
+        // 传递事件给主线程
+        printf("[Log] call QueueEvent...\n");
+        wxCommandEvent evt(MY_EVENT, wxID_ANY);
+        //frame->QueueEvent(evt.Clone());
+        frame->AddPendingEvent(evt);
+
+
+
+
+
+
+
         if (!zip.Close()) return ERROR_FILE_CLOSE_FAILED;
         return SUCCESSFUL;
     }
+
 };
 
 

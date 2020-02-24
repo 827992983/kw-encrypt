@@ -70,19 +70,20 @@
 													<label>Encrypt</label>
 													<handler function="OnbtnEncryptClick" entry="EVT_BUTTON" />
 												</object>
-												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
+												<flag>wxALL|wxEXPAND</flag>
 												<border>1</border>
 											</object>
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON6" variable="btnDecrypt" member="yes">
 													<label>Decrypt</label>
-													<handler function="OnButton1Click" entry="EVT_BUTTON" />
+													<handler function="OnbtnDecryptClick" entry="EVT_BUTTON" />
 												</object>
-												<flag>wxBOTTOM|wxLEFT|wxRIGHT|wxEXPAND</flag>
+												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
 												<border>1</border>
 											</object>
 										</object>
 										<flag>wxALL|wxEXPAND</flag>
+										<border>1</border>
 										<option>1</option>
 									</object>
 								</object>

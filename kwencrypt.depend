@@ -1690,7 +1690,7 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1582268614 d:\proj\kwencrypt\kwencryptmain.h
+1582564094 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
 	<wx/dirdlg.h>
 	<wx/filedlg.h>
@@ -1703,6 +1703,7 @@
 	<wx/statusbr.h>
 	<wx/textdlg.h>
 	"FileItemMenu.h"
+	<wx/thread.h>
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\menu.h
 	"wx/defs.h"
@@ -1825,7 +1826,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582470319 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582564172 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -1838,6 +1839,7 @@
 	<wx/wfstream.h>
 	<wx/zipstrm.h>
 	"ZipUtil.h"
+	<thread>
 	<wx/intl.h>
 	<wx/string.h>
 
@@ -2703,8 +2705,11 @@
 	<iterator>
 	<utility>
 
-1582469382 d:\proj\kwencrypt\ziputil.h
+1582564191 d:\proj\kwencrypt\ziputil.h
 	<wx/string.h>
 	<wx/wfstream.h>
 	<wx/zipstrm.h>
+	"kwencryptMain.h"
+	<wx/progdlg.h>
+	<wx/app.h>
 
