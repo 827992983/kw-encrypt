@@ -83,7 +83,6 @@
 											</object>
 										</object>
 										<flag>wxALL|wxEXPAND</flag>
-										<border>1</border>
 										<option>1</option>
 									</object>
 								</object>
@@ -140,10 +139,6 @@
 		<object class="wxPasswordEntryDialog" name="ID_PASSWORDENTRYDIALOG1" variable="PasswordEntryDialog1" member="yes">
 			<caption></caption>
 			<message>Enter password</message>
-		</object>
-		<object class="wxProgressDialog" name="ID_PROGRESSDIALOG1" variable="ProgressDialog1" member="yes">
-			<title></title>
-			<message></message>
 		</object>
 	</object>
 </wxsmith>

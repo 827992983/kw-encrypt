@@ -19,16 +19,15 @@
 #include <wx/listctrl.h>
 #include <wx/menu.h>
 #include <wx/panel.h>
-#include <wx/progdlg.h>
 #include <wx/sizer.h>
 #include <wx/statusbr.h>
 #include <wx/textdlg.h>
 //*)
 #include "FileItemMenu.h"
 #include <wx/thread.h>
+#include <wx/progdlg.h>
 
-
-DECLARE_EVENT_TYPE(MY_EVENT, -1);
+DECLARE_EVENT_TYPE(wxMY_ENCRYPT_EVENT, wxID_ANY);
 
 class kwencryptFrame: public wxFrame
 {
@@ -57,7 +56,8 @@ class kwencryptFrame: public wxFrame
         void OnlistOriginFilesItemRClick(wxListEvent& event);
         void OnlistOriginFilesItemSelect(wxListEvent& event);
         void OnlistOriginFilesItemDeselect(wxListEvent& event);
-        void OnBtnDecryptClick(wxCommandEvent& event);
+        void OnbtnDecryptClick(wxCommandEvent& event);
+        void OnbtnDecryptClick1(wxCommandEvent& event);
         //*)
         void OnMenuItemCopyOriginalFileSelected(wxCommandEvent& event);
         void OnMenuItemRemoveOriginalFileSelected(wxCommandEvent& event);
@@ -79,7 +79,6 @@ class kwencryptFrame: public wxFrame
         static const long idMenuAbout;
         static const long ID_STATUSBAR1;
         static const long ID_PASSWORDENTRYDIALOG1;
-        static const long ID_PROGRESSDIALOG1;
         //*)
         static const long ID_MENU_ORIGINAL_FILE_COPY;
         static const long ID_MENU_ORIGINAL_FILE_REMOVE;
@@ -100,10 +99,11 @@ class kwencryptFrame: public wxFrame
         wxPanel* Panel1;
         wxPanel* Panel2;
         wxPasswordEntryDialog* PasswordEntryDialog1;
-        wxProgressDialog* ProgressDialog1;
         wxStatusBar* StatusBar1;
         //*)
         FileItemMenu *fileItemMenu;
+        wxProgressDialog *encryptProgressDialog;
+
         DECLARE_EVENT_TABLE()
 };
 
