@@ -3,11 +3,18 @@
 KW is a file encryption tool, which is currently in the development stage.
 
 Programming language: C + + 11
+
 GUI framework: wxWidgets3.x
+
 Encryption algorithm: AES-256 CTR
+
 KDF (key derivation function): SHA-256 (may be upgraded to pbkdf2 in the future)
+
 Compression algorithm: zip
+
 Platform: Windows x64 (32-bit support will be available in the near future)
+
+
 
 
 
