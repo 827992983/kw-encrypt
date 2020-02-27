@@ -63,15 +63,21 @@
 		</Linker>
 		<Unit filename="DnDialogFile.cpp" />
 		<Unit filename="DnDialogFile.h" />
+		<Unit filename="EncryptUtil.h" />
 		<Unit filename="FileItemMenu.cpp" />
 		<Unit filename="FileItemMenu.h" />
-		<Unit filename="ZipUtil.h" />
+		<Unit filename="aes.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="aes.h" />
+		<Unit filename="aes.hpp" />
 		<Unit filename="kwencryptApp.cpp" />
 		<Unit filename="kwencryptApp.h" />
 		<Unit filename="kwencryptMain.cpp" />
 		<Unit filename="kwencryptMain.h" />
 		<Unit filename="listData.cpp" />
 		<Unit filename="listData.h" />
+		<Unit filename="picosha2.h" />
 		<Unit filename="resource.rc">
 			<Option compilerVar="WINDRES" />
 		</Unit>

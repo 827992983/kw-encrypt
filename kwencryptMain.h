@@ -32,7 +32,7 @@ DECLARE_EVENT_TYPE(wxMY_ENCRYPT_EVENT, wxID_ANY);
 class kwencryptFrame: public wxFrame
 {
     friend class DnDialogFile;
-    friend class ZipUtil;
+    friend class EncryptUtil;
 
     public:
 
@@ -95,6 +95,7 @@ class kwencryptFrame: public wxFrame
         wxDirDialog* DirDialog1;
         wxFileDialog* FileDialog1;
         wxFileDialog* FileDialog2;
+        wxFileDialog* FileDialog3;
         wxListCtrl* listOriginFiles;
         wxPanel* Panel1;
         wxPanel* Panel2;

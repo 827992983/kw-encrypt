@@ -18,7 +18,7 @@
 #include "wxDirTraverserImplement.h"
 #include <wx/wfstream.h>
 #include <wx/zipstrm.h>
-#include "ZipUtil.h"
+#include "EncryptUtil.h"
 #include <thread>
 
 //(*InternalHeaders(kwencryptFrame)
@@ -119,6 +119,7 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     btnEncrypt = new wxButton(Panel2, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
     BoxSizer4->Add(btnEncrypt, 0, wxALL|wxEXPAND, 1);
     btnDecrypt = new wxButton(Panel2, ID_BUTTON6, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
+    btnDecrypt->Disable();
     BoxSizer4->Add(btnDecrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
     StaticBoxSizer1->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
     BoxSizer2->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND, 5);
@@ -149,6 +150,7 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     DirDialog1 = new wxDirDialog(this, _("Select directory"), wxEmptyString, wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, _T("wxDirDialog"));
     FileDialog2 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     PasswordEntryDialog1 = new wxPasswordEntryDialog(this, _("Enter password"), wxEmptyString, wxEmptyString, wxCANCEL|wxCENTRE|wxOK, wxDefaultPosition);
+    FileDialog3 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_SAVE, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
 
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemSelect);
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_DESELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemDeselect);
@@ -316,34 +318,47 @@ void kwencryptFrame::OnlistOriginFilesItemDeselect(wxListEvent& event)
 void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
 {
     btnEncrypt->Enable(false);
-    encryptProgressDialog = new wxProgressDialog("Encrypt progress", "", 100, this);
+    if (FileDialog3->ShowModal() == wxID_CANCEL) {
+        btnEncrypt->Enable(true);
+        return;
+    }
+    PasswordEntryDialog1->SetTextValidator(wxFILTER_ASCII); // 仅允许ASCII密码
+    if (PasswordEntryDialog1->ShowModal() == wxID_CANCEL) {
+        btnEncrypt->Enable(true);
+        return;
+    }
+    wxString outputPath = FileDialog3->GetPath();
+    wxString wxPassword = PasswordEntryDialog1->GetValue();
+    //wxMessageOutput::Get()->Printf(wxPassword);
+    std::string password = wxPassword.ToStdString();
+    //std::cout << password << std::endl;
+    encryptProgressDialog = new wxProgressDialog("Encrypt progress", "", 200, this); // 进度条前100用于压缩，后100用于加密
 
     wxMessageOutputStderr os = wxMessageOutputStderr(stdout);
     wxArrayString paths_to_encrypt; // 源文件绝对路径
     for (size_t i = 0; i < fileItems.size(); i++) {
         paths_to_encrypt.Add(fileItems[i].fileName.GetFullPath());
     }
-
-    //wxString outputPath = wxGetCwd() << "\\out.zip"; // 待会加一个选择输出文件路径的对话框
-    wxString outputPath = "c:\\users\\gsy\\desktop\\out.zip";
-
-    std::thread(&ZipUtil::writeToZip, paths_to_encrypt, outputPath, this).detach();
-
+    std::thread(&EncryptUtil::encrypt, paths_to_encrypt, outputPath, this, password).detach(); // 加密线程
 }
 
+// 加密线程更新进度条事件
 void kwencryptFrame::OnEncryptThreadEvent(wxCommandEvent &event)
 {
     wxString msg = event.GetString();
     int perc = event.GetInt();
-    if (perc == -1)
-    {
+    if (perc == -1){
         encryptProgressDialog->Show(false);
         delete encryptProgressDialog;
         btnEncrypt->Enable(true);
+        if (fileItems.empty()) return;
+        fileItems.clear();
+        listOriginFiles->DeleteAllItems();
+        listOriginFiles->Refresh();
         printf("[Log] Done!\n");
     } else {
         encryptProgressDialog->Update(perc, msg);
-        printf("[Log] encrypt %d%%\n", perc);
+        //printf("[Log] encrypt %d%%\n", perc);
     }
 }
 

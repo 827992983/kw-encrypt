@@ -1690,7 +1690,7 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1582604080 d:\proj\kwencrypt\kwencryptmain.h
+1582816717 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
 	<wx/dirdlg.h>
 	<wx/filedlg.h>
@@ -1826,7 +1826,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582612443 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582818277 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -1838,7 +1838,7 @@
 	"wxDirTraverserImplement.h"
 	<wx/wfstream.h>
 	<wx/zipstrm.h>
-	"ZipUtil.h"
+	"EncryptUtil.h"
 	<thread>
 	<wx/intl.h>
 	<wx/string.h>
@@ -2705,11 +2705,56 @@
 	<iterator>
 	<utility>
 
-1582613049 d:\proj\kwencrypt\ziputil.h
+1582731657 d:\proj\kwencrypt\ziputil.h
 	<wx/string.h>
 	<wx/wfstream.h>
 	<wx/zipstrm.h>
 	"kwencryptMain.h"
 	<wx/progdlg.h>
 	<wx/app.h>
+	<stdio.h>
+	<string.h>
+	<stdint.h>
+	"aes.hpp"
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	"picosha2.h"
+
+1581393260 source:d:\proj\kwencrypt\aes.c
+	<string.h>
+	"aes.h"
+
+1582637945 d:\proj\kwencrypt\aes.h
+	<stdint.h>
+
+1581393260 d:\proj\kwencrypt\aes.hpp
+	"aes.h"
+
+1531914638 d:\proj\kwencrypt\picosha2.h
+	<algorithm>
+	<cassert>
+	<iterator>
+	<sstream>
+	<vector>
+	<fstream>
+
+1582818483 d:\proj\kwencrypt\encryptutil.h
+	<wx/string.h>
+	<wx/wfstream.h>
+	<wx/zipstrm.h>
+	"kwencryptMain.h"
+	<wx/progdlg.h>
+	<wx/app.h>
+	<stdio.h>
+	<string.h>
+	<stdint.h>
+	"aes.hpp"
+	<iostream>
+	<fstream>
+	<string>
+	<vector>
+	"picosha2.h"
+	<time.h>
 

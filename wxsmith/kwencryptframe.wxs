@@ -76,6 +76,7 @@
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON6" variable="btnDecrypt" member="yes">
 													<label>Decrypt</label>
+													<enabled>0</enabled>
 													<handler function="OnbtnDecryptClick" entry="EVT_BUTTON" />
 												</object>
 												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
@@ -139,6 +140,11 @@
 		<object class="wxPasswordEntryDialog" name="ID_PASSWORDENTRYDIALOG1" variable="PasswordEntryDialog1" member="yes">
 			<caption></caption>
 			<message>Enter password</message>
+		</object>
+		<object class="wxFileDialog" variable="FileDialog3" member="yes">
+			<message>Select file</message>
+			<wildcard>*.kwe</wildcard>
+			<style>wxFD_SAVE</style>
 		</object>
 	</object>
 </wxsmith>
