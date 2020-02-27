@@ -1,8 +1,15 @@
 # kw-encrypt
 
-Hey guys, this is the encryption program I developed in the boring holiday. It can encrypt one or more files into one .KWE file, and decrypt the .KWE file into the original files.
+KW is a file encryption tool, which is currently in the development stage.
 
-The user interface looks like this. At present, only the basic interface has been completed.
+Programming language: C + + 11
+GUI framework: wxWidgets3.x
+Encryption algorithm: AES-256 CTR
+KDF (key derivation function): SHA-256 (may be upgraded to pbkdf2 in the future)
+Compression algorithm: zip
+Platform: Windows x64 (32-bit support will be available in the near future)
+
+
 
 
 
@@ -10,4 +17,8 @@ The user interface looks like this. At present, only the basic interface has bee
 
 
 
-This program should be able to run on a 64-bits system between Windows XP and windows 10 without any other dependent files. Earlier systems were not tested. You can find the executable in the bin/release directory.
+Referenced third party libraries:
+
+https://github.com/kokke/tiny-AES-c
+
+https://github.com/okdshin/PicoSHA2
