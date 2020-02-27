@@ -1,6 +1,6 @@
 # kw-encrypt
 
-KW is a file encryption tool, which is currently in the development stage.
+kw-encrypt is a file encryption tool, which is currently in the development stage.
 
 Programming language: C + + 11
 
