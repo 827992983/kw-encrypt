@@ -1690,7 +1690,7 @@
 1520398538 d:\wxwidgets-3.0.4\include\wx\univ\theme.h
 	"wx/string.h"
 
-1582816717 d:\proj\kwencrypt\kwencryptmain.h
+1582855974 d:\proj\kwencrypt\kwencryptmain.h
 	<wx/button.h>
 	<wx/dirdlg.h>
 	<wx/filedlg.h>
@@ -1826,7 +1826,7 @@
 
 1520398538 d:\wxwidgets-3.0.4\include\wx\msw\rcdefs.h
 
-1582818277 source:d:\proj\kwencrypt\kwencryptmain.cpp
+1582869830 source:d:\proj\kwencrypt\kwencryptmain.cpp
 	"kwencryptMain.h"
 	<wx/msgdlg.h>
 	"DnDialogFile.h"
@@ -2740,7 +2740,7 @@
 	<vector>
 	<fstream>
 
-1582818483 d:\proj\kwencrypt\encryptutil.h
+1582866900 d:\proj\kwencrypt\encryptutil.h
 	<wx/string.h>
 	<wx/wfstream.h>
 	<wx/zipstrm.h>
@@ -2757,4 +2757,74 @@
 	<vector>
 	"picosha2.h"
 	<time.h>
+
+1582854459 source:d:\proj\kwencrypt\encryptinfodialog.cpp
+	"EncryptInfoDialog.h"
+	<wx/intl.h>
+	<wx/string.h>
+
+1582855880 d:\proj\kwencrypt\encryptinfodialog.h
+	<wx/dialog.h>
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\tglbtn.h
+	"wx/defs.h"
+	"wx/event.h"
+	"wx/anybutton.h"
+	"wx/univ/tglbtn.h"
+	"wx/msw/tglbtn.h"
+	"wx/gtk/tglbtn.h"
+	"wx/gtk1/tglbtn.h"
+	"wx/motif/tglbtn.h"
+	"wx/osx/tglbtn.h"
+	"wx/os2/tglbtn.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\univ\tglbtn.h
+	"wx/button.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\tglbtn.h
+	"wx/bitmap.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk\tglbtn.h
+	"wx/bitmap.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk1\tglbtn.h
+	"wx/bitmap.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\motif\tglbtn.h
+	"wx/checkbox.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\checkbox.h
+	"wx/defs.h"
+	"wx/control.h"
+	"wx/univ/checkbox.h"
+	"wx/msw/checkbox.h"
+	"wx/motif/checkbox.h"
+	"wx/gtk/checkbox.h"
+	"wx/gtk1/checkbox.h"
+	"wx/osx/checkbox.h"
+	"wx/cocoa/checkbox.h"
+	"wx/os2/checkbox.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\univ\checkbox.h
+	"wx/button.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\msw\checkbox.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\motif\checkbox.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk\checkbox.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\gtk1\checkbox.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\osx\checkbox.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\cocoa\checkbox.h
+	"wx/cocoa/NSButton.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\os2\checkbox.h
+	"wx/control.h"
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\osx\tglbtn.h
+
+1520398538 d:\wxwidgets-3.0.4\include\wx\os2\tglbtn.h
 

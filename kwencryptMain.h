@@ -27,6 +27,7 @@
 #include <wx/thread.h>
 #include <wx/progdlg.h>
 
+
 DECLARE_EVENT_TYPE(wxMY_ENCRYPT_EVENT, wxID_ANY);
 
 class kwencryptFrame: public wxFrame
@@ -93,9 +94,10 @@ class kwencryptFrame: public wxFrame
         wxButton* btnRemove;
         wxButton* btnRemoveAllOriginFiles;
         wxDirDialog* DirDialog1;
-        wxFileDialog* FileDialog1;
-        wxFileDialog* FileDialog2;
-        wxFileDialog* FileDialog3;
+        wxFileDialog* FileDialogOpenKweFile;
+        wxFileDialog* FileDialogSaveKweFile;
+        wxFileDialog* FileDialogSaveOriginalFile;
+        wxFileDialog* FileDialogSeleteOriginalFile;
         wxListCtrl* listOriginFiles;
         wxPanel* Panel1;
         wxPanel* Panel2;
@@ -104,6 +106,7 @@ class kwencryptFrame: public wxFrame
         //*)
         FileItemMenu *fileItemMenu;
         wxProgressDialog *encryptProgressDialog;
+
 
         DECLARE_EVENT_TABLE()
 };

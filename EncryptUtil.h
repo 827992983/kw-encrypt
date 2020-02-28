@@ -47,8 +47,6 @@ public:
     参数
     files：源文件和源目录的绝对路径，这些路径由用户拖拽或用对话框选取，目录路径不包含其子文件、子目录的路径
     outputPath：压缩文件的输出绝对路径
-
-    还没加中途出错的处理，进度对话框是不会消失的 2020年2月25日12:56:09
     **/
     static void encrypt(wxArrayString files, wxString outputPath, kwencryptFrame *frame, std::string password)
     {
@@ -172,7 +170,7 @@ public:
             size_t lastRead = inFile.LastRead(); // 实际读取字节数
             //printf("[Log] lastRead = %d\n", lastRead);
             AES_CTR_xcrypt_buffer(&ctx, buffer, lastRead);
-            if (!outFile.Write(buffer, lastRead)) printf("[Error] WriteAll return false!\n");
+            if (!outFile.WriteAll(buffer, lastRead)) printf("[Error] WriteAll return false!\n"); // 未测试
             processedSize += lastRead;
             //printf("[Log] processedSize = %lld\tunProcessedSize = %lld\n", processedSize, unProcessedSize);
             sendEvent(frame, "Encryption progress", 100 + int(processedSize.ToDouble() / unProcessedSize.ToDouble() * 100));
@@ -187,6 +185,45 @@ public:
     }
 
 
+    static void decrypt(wxString kweFile, wxString outputPath, kwencryptFrame *frame, std::string password)
+    {
+//        wxMessageOutputStderr logger = wxMessageOutputStderr(stdout);
+//        logger.Printf("[Log] kweFile:%s\n[Log] outputPath:%s\n", kweFile, outputPath);
+//        std::cout << "[Log] password:" << password << std::endl;
+
+        wxFileName kweFileName(kweFile);
+        wxFFileInputStream kweIn(kweFileName.GetFullPath());
+        wxFFileOutputStream tmpOut(outputPath + ".zip");
+        wxULongLong unProcessedSize = kweFileName.GetSize();
+        wxULongLong processedSize = 0;
+        std::vector<unsigned char> vKey(picosha2::k_digest_size);
+        picosha2::hash256(password.begin(), password.end(), vKey.begin(), vKey.end());
+        assert(vKey.size() == 32);
+        uint8_t key[32];
+        for (size_t i = 0; i < 32; i++)  key[i] = vKey[i];
+        uint8_t iv[16]  = { 0xf0, 0xf1, 0xf2, 0xf3, 0xf4, 0xf5, 0xf6, 0xf7, 0xf8, 0xf9, 0xfa, 0xfb, 0xfc, 0xfd, 0xfe, 0xff };
+        constexpr int BUFFER_SIZE = 1024;
+        uint8_t buffer[BUFFER_SIZE];
+        struct AES_ctx ctx;
+        AES_init_ctx_iv(&ctx, key, iv);
+        do {
+            kweIn.Read(buffer, BUFFER_SIZE);
+            size_t lastRead = kweIn.LastRead(); // 实际读取字节数
+            AES_CTR_xcrypt_buffer(&ctx, buffer, lastRead);
+            if (!tmpOut.WriteAll(buffer, lastRead)) printf("[Error] WriteAll return false!\n");
+            processedSize += lastRead;
+            //printf("[Log] processedSize = %lld\tunProcessedSize = %lld\n", processedSize, unProcessedSize);
+            sendEvent(frame, "Decryption progress", int(processedSize.ToDouble() / unProcessedSize.ToDouble() * 100));
+        } while (kweIn.CanRead());
+        kweIn.GetFile()->Close();
+        tmpOut.GetFile()->Close();
+        sendEvent(frame, "", -1); // -1 表示完成
+
+        // 不提供解压缩功能，解密得到zip就算了，因为无法验证密钥正确性，
+        // 用错误的密钥解密得到zip后，无法解压
+        // 就算密钥正确，要解压也需要很多额外工作，比如设置解压路径，是否全部解压等，干脆把这部分工作交给用户使用压缩软件完成
+
+    }
 };
 
 

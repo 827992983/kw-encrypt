@@ -2,6 +2,7 @@
 <wxsmith>
 	<object class="wxFrame" name="kwencryptFrame">
 		<title>kw-encryptor</title>
+		<centered>1</centered>
 		<size>800,500</size>
 		<id_arg>0</id_arg>
 		<style>wxCAPTION|wxRESIZE_BORDER|wxCLOSE_BOX|wxMAXIMIZE_BOX|wxMINIMIZE_BOX|wxCLIP_CHILDREN</style>
@@ -13,7 +14,7 @@
 							<orient>wxVERTICAL</orient>
 							<object class="sizeritem">
 								<object class="wxStaticBoxSizer" variable="StaticBoxSizer1" member="no">
-									<label>Drag the files you want to encrypt to the box below</label>
+									<label>Drag files to below box</label>
 									<object class="sizeritem">
 										<object class="wxListCtrl" name="ID_LISTCTRL1" variable="listOriginFiles" member="yes">
 											<style>wxLC_REPORT</style>
@@ -76,7 +77,6 @@
 											<object class="sizeritem">
 												<object class="wxButton" name="ID_BUTTON6" variable="btnDecrypt" member="yes">
 													<label>Decrypt</label>
-													<enabled>0</enabled>
 													<handler function="OnbtnDecryptClick" entry="EVT_BUTTON" />
 												</object>
 												<flag>wxTOP|wxLEFT|wxRIGHT|wxEXPAND</flag>
@@ -124,16 +124,16 @@
 			<widths>-1</widths>
 			<styles>wxSB_NORMAL</styles>
 		</object>
-		<object class="wxFileDialog" variable="FileDialog1" member="yes">
-			<message>Select file</message>
+		<object class="wxFileDialog" variable="FileDialogSeleteOriginalFile" member="yes">
+			<message>Select file to encrypt</message>
 			<style>wxFD_OPEN</style>
 		</object>
 		<object class="wxDirDialog" variable="DirDialog1" member="yes">
 			<message>Select directory</message>
 			<style>wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST</style>
 		</object>
-		<object class="wxFileDialog" variable="FileDialog2" member="yes">
-			<message>Select file</message>
+		<object class="wxFileDialog" variable="FileDialogOpenKweFile" member="yes">
+			<message>Select a .kwe file</message>
 			<wildcard>*.kwe</wildcard>
 			<style>wxFD_OPEN</style>
 		</object>
@@ -141,9 +141,13 @@
 			<caption></caption>
 			<message>Enter password</message>
 		</object>
-		<object class="wxFileDialog" variable="FileDialog3" member="yes">
-			<message>Select file</message>
+		<object class="wxFileDialog" variable="FileDialogSaveKweFile" member="yes">
+			<message>Select encrypted file output path</message>
 			<wildcard>*.kwe</wildcard>
+			<style>wxFD_SAVE</style>
+		</object>
+		<object class="wxFileDialog" variable="FileDialogSaveOriginalFile" member="yes">
+			<message>Select decrypted file output path</message>
 			<style>wxFD_SAVE</style>
 		</object>
 	</object>

@@ -103,7 +103,7 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     BoxSizer1 = new wxBoxSizer(wxHORIZONTAL);
     Panel2 = new wxPanel(Panel1, ID_PANEL2, wxDefaultPosition, wxDefaultSize, wxTAB_TRAVERSAL, _T("ID_PANEL2"));
     BoxSizer2 = new wxBoxSizer(wxVERTICAL);
-    StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, Panel2, _("Drag the files you want to encrypt to the box below"));
+    StaticBoxSizer1 = new wxStaticBoxSizer(wxHORIZONTAL, Panel2, _("Drag files to below box"));
     listOriginFiles = new wxListCtrl(Panel2, ID_LISTCTRL1, wxDefaultPosition, wxDefaultSize, wxLC_REPORT, wxDefaultValidator, _T("ID_LISTCTRL1"));
     StaticBoxSizer1->Add(listOriginFiles, 5, wxALL|wxEXPAND, 1);
     BoxSizer4 = new wxBoxSizer(wxVERTICAL);
@@ -119,7 +119,6 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     btnEncrypt = new wxButton(Panel2, ID_BUTTON4, _("Encrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON4"));
     BoxSizer4->Add(btnEncrypt, 0, wxALL|wxEXPAND, 1);
     btnDecrypt = new wxButton(Panel2, ID_BUTTON6, _("Decrypt"), wxDefaultPosition, wxDefaultSize, 0, wxDefaultValidator, _T("ID_BUTTON6"));
-    btnDecrypt->Disable();
     BoxSizer4->Add(btnDecrypt, 0, wxTOP|wxLEFT|wxRIGHT|wxEXPAND, 1);
     StaticBoxSizer1->Add(BoxSizer4, 1, wxALL|wxEXPAND, 0);
     BoxSizer2->Add(StaticBoxSizer1, 1, wxALL|wxEXPAND, 5);
@@ -146,11 +145,13 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     StatusBar1->SetFieldsCount(1,__wxStatusBarWidths_1);
     StatusBar1->SetStatusStyles(1,__wxStatusBarStyles_1);
     SetStatusBar(StatusBar1);
-    FileDialog1 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    FileDialogSeleteOriginalFile = new wxFileDialog(this, _("Select file to encrypt"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     DirDialog1 = new wxDirDialog(this, _("Select directory"), wxEmptyString, wxDD_DEFAULT_STYLE|wxDD_DIR_MUST_EXIST, wxDefaultPosition, wxDefaultSize, _T("wxDirDialog"));
-    FileDialog2 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    FileDialogOpenKweFile = new wxFileDialog(this, _("Select a .kwe file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_OPEN, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
     PasswordEntryDialog1 = new wxPasswordEntryDialog(this, _("Enter password"), wxEmptyString, wxEmptyString, wxCANCEL|wxCENTRE|wxOK, wxDefaultPosition);
-    FileDialog3 = new wxFileDialog(this, _("Select file"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_SAVE, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    FileDialogSaveKweFile = new wxFileDialog(this, _("Select encrypted file output path"), wxEmptyString, wxEmptyString, _("*.kwe"), wxFD_SAVE, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    FileDialogSaveOriginalFile = new wxFileDialog(this, _("Select decrypted file output path"), wxEmptyString, wxEmptyString, wxFileSelectorDefaultWildcardStr, wxFD_SAVE, wxDefaultPosition, wxDefaultSize, _T("wxFileDialog"));
+    Center();
 
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemSelect);
     Connect(ID_LISTCTRL1,wxEVT_COMMAND_LIST_ITEM_DESELECTED,(wxObjectEventFunction)&kwencryptFrame::OnlistOriginFilesItemDeselect);
@@ -198,6 +199,8 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     col2.SetAlign(wxLIST_FORMAT_LEFT);
     listOriginFiles->InsertColumn(2, col2);
 
+
+
     printf("[Log] Window initialization successful!\n");
 }
 
@@ -207,12 +210,13 @@ kwencryptFrame::~kwencryptFrame()
     //*)
     printf("[Log] Window closed!\n");
 
+
     //system("pause");
 }
 
 void kwencryptFrame::OnQuit(wxCommandEvent& event)
 {
-    Close();
+    Close(true);
 }
 
 // About 菜单
@@ -229,8 +233,8 @@ void kwencryptFrame::OnClose(wxCloseEvent& event)
 // 添加单个文件（wxFileDialog 默认会将快捷方式 .lnk 转成绝对路径，不知道如何禁用）
 void kwencryptFrame::OnbtnAddFileClick(wxCommandEvent& event)
 {
-    if (FileDialog1->ShowModal() == wxID_CANCEL) return;
-    wxFileName fileName = FileDialog1->GetPath();
+    if (FileDialogSeleteOriginalFile->ShowModal() == wxID_CANCEL) return;
+    wxFileName fileName = FileDialogSeleteOriginalFile->GetPath();
     fileItems.push_back(FileItem(fileName.GetFullPath(), fileName.GetSize().ToString(), "File"));
     overwriteListCtrl(listOriginFiles, fileItems);
 }
@@ -318,7 +322,7 @@ void kwencryptFrame::OnlistOriginFilesItemDeselect(wxListEvent& event)
 void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
 {
     btnEncrypt->Enable(false);
-    if (FileDialog3->ShowModal() == wxID_CANCEL) {
+    if (FileDialogSaveKweFile->ShowModal() == wxID_CANCEL) {
         btnEncrypt->Enable(true);
         return;
     }
@@ -327,8 +331,9 @@ void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
         btnEncrypt->Enable(true);
         return;
     }
-    wxString outputPath = FileDialog3->GetPath();
+    wxString outputPath = FileDialogSaveKweFile->GetPath();
     wxString wxPassword = PasswordEntryDialog1->GetValue();
+    PasswordEntryDialog1->SetValue("");
     //wxMessageOutput::Get()->Printf(wxPassword);
     std::string password = wxPassword.ToStdString();
     //std::cout << password << std::endl;
@@ -340,9 +345,11 @@ void kwencryptFrame::OnbtnEncryptClick(wxCommandEvent& event)
         paths_to_encrypt.Add(fileItems[i].fileName.GetFullPath());
     }
     std::thread(&EncryptUtil::encrypt, paths_to_encrypt, outputPath, this, password).detach(); // 加密线程
+
+
 }
 
-// 加密线程更新进度条事件
+// 子线程更新进度条事件
 void kwencryptFrame::OnEncryptThreadEvent(wxCommandEvent &event)
 {
     wxString msg = event.GetString();
@@ -351,6 +358,7 @@ void kwencryptFrame::OnEncryptThreadEvent(wxCommandEvent &event)
         encryptProgressDialog->Show(false);
         delete encryptProgressDialog;
         btnEncrypt->Enable(true);
+        btnDecrypt->Enable(true);
         if (fileItems.empty()) return;
         fileItems.clear();
         listOriginFiles->DeleteAllItems();
@@ -366,6 +374,26 @@ void kwencryptFrame::OnEncryptThreadEvent(wxCommandEvent &event)
 // 解密文件
 void kwencryptFrame::OnbtnDecryptClick(wxCommandEvent& event)
 {
-    printf("[Log] OnBtnDecryptClick\n");
-    wxFileName fname("c:\\users\\gsy\\desktop\\file.txt");
+    btnDecrypt->Enable(false);
+    if (FileDialogOpenKweFile->ShowModal() == wxID_CANCEL) {
+        btnDecrypt->Enable(true);
+        return;
+    }
+    PasswordEntryDialog1->SetTextValidator(wxFILTER_ASCII); // 仅允许ASCII密码
+    if (PasswordEntryDialog1->ShowModal() == wxID_CANCEL) {
+        btnDecrypt->Enable(true);
+        return;
+    }
+    if (FileDialogSaveOriginalFile->ShowModal() == wxID_CANCEL) {
+        btnEncrypt->Enable(true);
+        return;
+    }
+    wxString kweFile = FileDialogOpenKweFile->GetPath(); // 加密文件路径
+    wxString wxPassword = PasswordEntryDialog1->GetValue(); // ASCII 密码
+    wxString decryptedFile = FileDialogSaveOriginalFile->GetPath(); // 解密文件输出路径
+    std::string password = wxPassword.ToStdString();
+    encryptProgressDialog = new wxProgressDialog("Decrypt progress", "", 100, this);
+    PasswordEntryDialog1->SetValue("");
+    std::thread(&EncryptUtil::decrypt, kweFile, decryptedFile, this, password).detach(); // 解密线程
+    //EncryptUtil::decrypt(kweFile, decryptedFile, this, password); // 子线程
 }
