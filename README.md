@@ -1,8 +1,10 @@
 # kw-encrypt
 
-kw-encrypt is a file encryption tool, which is currently in the development stage.
+kw-encrypt is a file encryption tool base on AES.
 
-Programming language: C + + 11
+
+
+Programming language: C++11
 
 GUI framework: wxWidgets3.x
 

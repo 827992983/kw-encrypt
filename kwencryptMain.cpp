@@ -164,6 +164,7 @@ kwencryptFrame::kwencryptFrame(wxWindow* parent,wxWindowID id)
     Connect(ID_BUTTON6,wxEVT_COMMAND_BUTTON_CLICKED,(wxObjectEventFunction)&kwencryptFrame::OnbtnDecryptClick);
     Connect(idMenuQuit,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnQuit);
     Connect(idMenuAbout,wxEVT_COMMAND_MENU_SELECTED,(wxObjectEventFunction)&kwencryptFrame::OnAbout);
+    Connect(wxID_ANY,wxEVT_CLOSE_WINDOW,(wxObjectEventFunction)&kwencryptFrame::OnClose);
     //*)
 
 
@@ -228,6 +229,7 @@ void kwencryptFrame::OnAbout(wxCommandEvent& event)
 
 void kwencryptFrame::OnClose(wxCloseEvent& event)
 {
+    exit(0);
 }
 
 // 添加单个文件（wxFileDialog 默认会将快捷方式 .lnk 转成绝对路径，不知道如何禁用）
